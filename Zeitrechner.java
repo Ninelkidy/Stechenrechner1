@@ -14,14 +14,7 @@ public class Zeitrechner extends JFrame {
     private JButton ueberstundenBalanceButton, zeitDesStechensButton;
     private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel;
 
-    TitleScreenHandler tsHandler = new TitleScreenHandler() ;
-    TitleScreenHandler1 tsHandler1 = new TitleScreenHandler1();
-    /* ActionListener actionListener1 = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            stechenScreen();
-        }
-    }; */
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Zeitrechner());
@@ -70,7 +63,11 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.setBorderPainted(false);
         ueberstundenBalanceButton.setForeground(new Color(223, 149, 70));
         ueberstundenBalanceButton.setBounds(160, 170, 460, 300);
-        ueberstundenBalanceButton.addActionListener(tsHandler);
+        ueberstundenBalanceButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ueberstundenScreen();
+            }
+        });
 
         zeitDesStechensButton = new JButton("") {
             @Override
@@ -84,7 +81,11 @@ public class Zeitrechner extends JFrame {
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(223, 149, 70));
         zeitDesStechensButton.setBounds(180, 190, 490, 300);
-        zeitDesStechensButton.addActionListener(tsHandler1);
+        zeitDesStechensButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                stechenScreen();
+            }
+        });
 
         backgroundPanel.add(ueberstundenBalanceButton);
         backgroundPanel.add(zeitDesStechensButton);
@@ -175,9 +176,11 @@ public class Zeitrechner extends JFrame {
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
     }
-
+    //TODO WARUM ZEIGT ES DAS NICHT SONDERN IMMER NUR EINS VOM BEIDEN ICH BEENDE MEIN LEBEN
     public void stechenScreen() {
-
+        repaint();
+        revalidate();
+        ueberstundenPanel.setVisible(false);
         ImageIcon backgroundImageStechen = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
 
         backgroundPanelStechen = new JPanel(){
@@ -194,10 +197,14 @@ public class Zeitrechner extends JFrame {
 
 
     }
-
+    //hurensohn
     public void ueberstundenScreen() {
+
         repaint();
+        revalidate();
+        backgroundPanelStechen.setVisible(false);
         ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
+
         ueberstundenPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -210,17 +217,4 @@ public class Zeitrechner extends JFrame {
         setContentPane(ueberstundenPanel);
     }
 
-    public class TitleScreenHandler implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            ueberstundenScreen();
-
-        }
-    }
-    public class TitleScreenHandler1 implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            stechenScreen();
-
-        }
-
-    }
 }
