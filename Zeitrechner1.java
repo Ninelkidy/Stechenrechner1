@@ -8,7 +8,7 @@ public class Zeitrechner1 extends JFrame {
     private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField;
     private JLabel ergebnisLabel, ueberstundenLabel, titleLabelMain;
     private Container con;
-    private JButton ueberstundenBalanceButton, zeitDesStechensButton;
+    private JButton ueberstundenBalanceButton,  zeitDesStechensButton;
     private JPanel backgroundPanel, backgroundPanelStechen;
 
     public static void main(String[] args) {
@@ -172,10 +172,14 @@ public class Zeitrechner1 extends JFrame {
 
     public void ueberstundenBalanceScreen() {
         //TODO
-        backgroundPanel.setVisible(false);
+
         if(zeitDesStechensButton.isSelected()){
 
             ImageIcon backgroundImage = new ImageIcon("background.png");
+            JPanel backgroundPanelStechenBlock = new JPanel();
+            backgroundPanelStechenBlock.setBounds(0,0,200,200);
+            backgroundPanelStechenBlock.setBackground(Color.CYAN);
+            add.
 
             JPanel backgroundPanelStechen = new JPanel() {
                 @Override
@@ -186,8 +190,6 @@ public class Zeitrechner1 extends JFrame {
             };
             backgroundPanelStechen.setLayout(null);
             setContentPane(backgroundPanelStechen);
-        }else{
-
         }
 
     }
