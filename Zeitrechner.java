@@ -298,18 +298,14 @@ public class Zeitrechner extends JFrame {
         berechnenButton.setBackground(new java.awt.Color(70,70,70));
         ueberstundenPanel.add(berechnenButton);
 
-        JLabel ergebnisLabel = new JLabel("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                drawTextWithOutline(g, "Pausenzeit:", 50, 400, new Color(255, 98, 50));
-            }
-        };ergebnisLabel.setBounds(0,0, 500,500);
-        ergebnisLabel.setVisible(true);
+        ergebnisLabel = new JLabel("");
+        ergebnisLabel.setBounds(200, 550, 300, 25);
+        ergebnisLabel.setForeground(new java.awt.Color(255, 255, 255));
+        add(ergebnisLabel);
+        ueberstundenPanel.add(ergebnisLabel);
 
-        ueberstundenLabel.add(pausenZeitLabel);
         ueberstundenLabel = new JLabel("");
-        ueberstundenLabel.setBounds(210, 240, 200, 25);
+        ueberstundenLabel.setBounds(210, 500, 200, 25);
         ueberstundenLabel.setForeground(new java.awt.Color(255, 255, 255));
         ueberstundenPanel.add(ueberstundenLabel);
 
