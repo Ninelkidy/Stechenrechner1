@@ -80,7 +80,7 @@ public class Zeitrechner extends JFrame {
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(223, 149, 70));
-        zeitDesStechensButton.setBounds(180, 190, 460, 150);
+        zeitDesStechensButton.setBounds(180, 190, 470, 200);
         zeitDesStechensButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 stechenScreen();
@@ -165,34 +165,27 @@ public class Zeitrechner extends JFrame {
         int ankunftsMinuten = Integer.parseInt(ankunftsMinutenField.getText());
         double bleibZeit = Double.parseDouble(bleibZeitField.getText());
         double pausenZeit = Double.parseDouble(pausenZeitField.getText());
-
         double gesamtZeit = bleibZeit + pausenZeit;
         int gesamtStunden = (int) gesamtZeit;
         int gesamtMinuten = (int) ((gesamtZeit - gesamtStunden) * 60);
-
         int endMinuten = ankunftsMinuten + gesamtMinuten;
         int extraStunden = endMinuten / 60;
         endMinuten = endMinuten % 60;
-
         int endStunden = ankunftsStunden + gesamtStunden + extraStunden;
-
         ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
     }
-
     public void ueberstunden() {
         double vorgegebeneArbeitszeit = 7.6 * 60;
         double gesamteArbeitszeit = Double.parseDouble(bleibZeitField.getText());
         int arbeitszeitInMinuten = (int) (gesamteArbeitszeit * 60);
         int ueberstundenInMinuten = (int) (arbeitszeitInMinuten - vorgegebeneArbeitszeit);
-
-        if (ueberstundenInMinuten > 0) {
+        if(ueberstundenInMinuten > 0) {
             ueberstundenLabel.setText("Ueberstunden: " + ueberstundenInMinuten + " Minuten");
-        } else {
+        }else{
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
     }
 
-    //TODO WARUM ZEIGT ES DAS NICHT SONDERN IMMER NUR EINS VOM BEIDEN ICH BEENDE MEIN LEBEN
     public void stechenScreen() {
         repaint();
         revalidate();
@@ -206,14 +199,13 @@ public class Zeitrechner extends JFrame {
                 g.drawImage(backgroundImageStechen.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
- //
         backgroundPanelStechen.setSize(800, 600);
         backgroundPanelStechen.setVisible(true);
         setContentPane(backgroundPanelStechen);
 
 
     }
-    //hurensohn
+
     public void ueberstundenScreen() {
         repaint();
         revalidate();
@@ -270,11 +262,63 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "bleibZeit:", 50, 300, new Color(255, 98, 50));
+                drawTextWithOutline(g, "Bleibzeit:", 50, 300, new Color(255, 98, 50));
             }
         };bleibZeitLabel.setBounds(0,0, 500,400);
         bleibZeitLabel.setVisible(true);
         ueberstundenPanel.add(bleibZeitLabel);
+
+        bleibZeitField = new JTextField();
+        bleibZeitField.setBounds(370, 283, 150, 25);
+        bleibZeitField.setOpaque(false);
+        bleibZeitField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        bleibZeitField.setForeground(new Color(255, 98, 50));
+        add(bleibZeitField);
+
+        JLabel pausenZeitLabel = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Pausenzeit:", 50, 400, new Color(255, 98, 50));
+            }
+        };pausenZeitLabel.setBounds(0,0, 500,500);
+        pausenZeitLabel.setVisible(true);
+        ueberstundenPanel.add(pausenZeitLabel);
+
+        pausenZeitField = new JTextField();
+        pausenZeitField.setBounds(370, 383, 150, 25);
+        pausenZeitField.setOpaque(false);
+        pausenZeitField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        pausenZeitField.setForeground(new Color(255, 98, 50));
+        ueberstundenPanel.add(pausenZeitField);
+
+        JButton berechnenButton = new JButton("Zeit berechnen");
+        berechnenButton.setBounds(20, 500, 200, 30);
+        berechnenButton.setForeground(new java.awt.Color(255, 255, 255));
+        berechnenButton.setBackground(new java.awt.Color(70,70,70));
+        ueberstundenPanel.add(berechnenButton);
+
+        JLabel ergebnisLabel = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Pausenzeit:", 50, 400, new Color(255, 98, 50));
+            }
+        };ergebnisLabel.setBounds(0,0, 500,500);
+        ergebnisLabel.setVisible(true);
+
+        ueberstundenLabel.add(pausenZeitLabel);
+        ueberstundenLabel = new JLabel("");
+        ueberstundenLabel.setBounds(210, 240, 200, 25);
+        ueberstundenLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ueberstundenPanel.add(ueberstundenLabel);
+
+        berechnenButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                berechneFeierabendZeit();
+                ueberstunden();
+            }
+        });
 
     }
 
