@@ -62,7 +62,7 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.setContentAreaFilled(false);
         ueberstundenBalanceButton.setBorderPainted(false);
         ueberstundenBalanceButton.setForeground(new Color(223, 149, 70));
-        ueberstundenBalanceButton.setBounds(160, 170, 460, 300);
+        ueberstundenBalanceButton.setBounds(160, 170, 460, 150);
         ueberstundenBalanceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ueberstundenScreen();
@@ -80,7 +80,7 @@ public class Zeitrechner extends JFrame {
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(223, 149, 70));
-        zeitDesStechensButton.setBounds(180, 190, 490, 300);
+        zeitDesStechensButton.setBounds(180, 190, 460, 150);
         zeitDesStechensButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 stechenScreen();
@@ -196,7 +196,7 @@ public class Zeitrechner extends JFrame {
     public void stechenScreen() {
         repaint();
         revalidate();
-        ueberstundenPanel.setVisible(false);
+
         ImageIcon backgroundImageStechen = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
 
         backgroundPanelStechen = new JPanel(){
