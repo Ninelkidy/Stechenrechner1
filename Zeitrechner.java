@@ -206,7 +206,7 @@ public class Zeitrechner extends JFrame {
                 g.drawImage(backgroundImageStechen.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-
+ //
         backgroundPanelStechen.setSize(800, 600);
         backgroundPanelStechen.setVisible(true);
         setContentPane(backgroundPanelStechen);
