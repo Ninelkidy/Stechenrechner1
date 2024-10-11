@@ -7,7 +7,49 @@ import javax.sound.sampled.FloatControl;
 public class Musik {
 
     public Musik() {
-        String filepath = "My Neck.wav"; // Musik file name
+        String filepath = "import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.FloatControl.Type;
+
+public class Musik {
+    public Musik() {
+        String filepath = "loading-screen-189489.wav";
+        PlayMusic(filepath);
+    }
+
+    public static void PlayMusic(String location) {
+        try {
+            File musicPath = new File(location);
+            if (musicPath.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                FloatControl volumeControl = (FloatControl)clip.getControl(Type.MASTER_GAIN);
+                setVolume(volumeControl, 0.5F);
+                clip.start();
+                System.out.println("Playing: " + location);
+            } else {
+                System.out.println("Music file nicht gefunden");
+            }
+        } catch (Exception var5) {
+            Exception e = var5;
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void setVolume(FloatControl volumeControl, float volume) {
+        float min = volumeControl.getMinimum();
+        float max = volumeControl.getMaximum();
+        float range = max - min;
+        float gain = range * volume + min;
+        volumeControl.setValue(gain);
+    }
+}
+"; // Musik file name
         PlayMusic(filepath);
     }
 
