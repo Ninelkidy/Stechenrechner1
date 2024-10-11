@@ -132,6 +132,21 @@ public class Zeitrechner extends JFrame {
         g2d.setColor(new Color(223, 149, 70));
         g2d.drawString(text, x, y);
     }
+    public void drawTextWithOutline(Graphics g, String text, int x, int y, Color textColor) {
+        Graphics2D g2d = (Graphics2D) g;
+        Font font = loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.ITALIC, 30);
+        g2d.setFont(font);
+
+        g2d.setColor(new Color(0x2D2D4C));
+        g2d.drawString(text, x - 2, y - 2); // Oben links
+        g2d.drawString(text, x + 2, y - 2); // Oben rechts
+        g2d.drawString(text, x - 2, y + 3); // Unten links
+        g2d.drawString(text, x + 2, y + 3); // Unten rechts
+
+        g2d.setColor(textColor);  // Benutze die übergebene Farbe
+        g2d.drawString(text, x, y);
+    }
+
 
     private Font loadCustomFont(String fontPath, int style, float size) {
         try {
@@ -176,12 +191,13 @@ public class Zeitrechner extends JFrame {
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
     }
+
     //TODO WARUM ZEIGT ES DAS NICHT SONDERN IMMER NUR EINS VOM BEIDEN ICH BEENDE MEIN LEBEN
     public void stechenScreen() {
         repaint();
         revalidate();
         ueberstundenPanel.setVisible(false);
-        ImageIcon backgroundImageStechen = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
+        ImageIcon backgroundImageStechen = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
 
         backgroundPanelStechen = new JPanel(){
             @Override
@@ -199,11 +215,10 @@ public class Zeitrechner extends JFrame {
     }
     //hurensohn
     public void ueberstundenScreen() {
-
         repaint();
         revalidate();
         backgroundPanelStechen.setVisible(false);
-        ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
+        ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
 
         ueberstundenPanel = new JPanel() {
             @Override
@@ -215,6 +230,52 @@ public class Zeitrechner extends JFrame {
         ueberstundenPanel.setSize(800, 600);
         ueberstundenPanel.setVisible(true);
         setContentPane(ueberstundenPanel);
+
+
+        JLabel ankunftsStundenLabel = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Ankunftsstunde:", 50, 100, new Color(255, 98, 50));
+            }
+        };ankunftsStundenLabel.setBounds(0,0, 500,200);
+        ankunftsStundenLabel.setVisible(true);
+        ueberstundenPanel.add(ankunftsStundenLabel);
+
+        ankunftsStundenField = new JTextField();
+        ankunftsStundenField.setBounds(370, 83, 150, 25);
+        ankunftsStundenField.setOpaque(false);
+        ankunftsStundenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ankunftsStundenField.setForeground(new Color(255, 98, 50));
+        add(ankunftsStundenField);
+
+        JLabel ankunftsMinutenLabel = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Ankunftsminute:", 50, 200, new Color(255, 98, 50));
+            }
+        };ankunftsMinutenLabel.setBounds(0,0, 500,400);
+        ankunftsMinutenLabel.setVisible(true);
+        ueberstundenPanel.add(ankunftsMinutenLabel);
+
+        ankunftsMinutenField = new JTextField();
+        ankunftsMinutenField.setBounds(370, 183, 150, 25);
+        ankunftsMinutenField.setOpaque(false);
+        ankunftsMinutenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ankunftsMinutenField.setForeground(new Color(255, 98, 50));
+        add(ankunftsMinutenField);
+
+        JLabel bleibZeitLabel = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "bleibZeit:", 50, 300, new Color(255, 98, 50));
+            }
+        };bleibZeitLabel.setBounds(0,0, 500,400);
+        bleibZeitLabel.setVisible(true);
+        ueberstundenPanel.add(bleibZeitLabel);
+
     }
 
 }
