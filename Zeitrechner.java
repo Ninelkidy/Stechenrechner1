@@ -55,14 +55,14 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline2(g, "Ueberstundenbalance", 50, 100);
+                drawTextWithOutline2(g, "Ueberstundenbalance", 50, 70);
             }
         };
         ueberstundenBalanceButton.setOpaque(false);
         ueberstundenBalanceButton.setContentAreaFilled(false);
         ueberstundenBalanceButton.setBorderPainted(false);
         ueberstundenBalanceButton.setForeground(new Color(223, 149, 70));
-        ueberstundenBalanceButton.setBounds(160, 170, 460, 150);
+        ueberstundenBalanceButton.setBounds(160, 170, 450, 100);
         ueberstundenBalanceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ueberstundenScreen();
@@ -90,7 +90,6 @@ public class Zeitrechner extends JFrame {
         backgroundPanel.add(ueberstundenBalanceButton);
         backgroundPanel.add(zeitDesStechensButton);
 
-        // backgroundPanelStechen EINMAL
         backgroundPanelStechen = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -189,7 +188,7 @@ public class Zeitrechner extends JFrame {
     public void ueberstundenScreen() {
         repaint();
         revalidate();
-        ueberstundenPanel.setLayout(null);
+
         ImageIcon backgroundImageStechen = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
 
         ueberstundenPanel = new JPanel()
@@ -211,7 +210,6 @@ public class Zeitrechner extends JFrame {
 
     public void stechenScreen() {
 
-        backgroundPanelStechen.setLayout(null);
 
         ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
 
@@ -224,6 +222,7 @@ public class Zeitrechner extends JFrame {
         };
         backgroundPanelStechen.setSize(800, 600);
         backgroundPanelStechen.setVisible(true);
+        backgroundPanelStechen.setLayout(null);
         setContentPane(backgroundPanelStechen);
 
 
@@ -304,6 +303,7 @@ public class Zeitrechner extends JFrame {
                 drawTextWithOutline(g, "Berechnen", 50, 100, new Color(255, 98, 50));
             }
         };
+        berechnenButton.setBorderPainted(false);
         berechnenButton.setOpaque(false);
         berechnenButton.setContentAreaFilled(false);
 
