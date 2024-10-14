@@ -143,7 +143,7 @@ public class Zeitrechner extends JFrame {
         g2d.drawString(text, x - 2, y + 3); // Unten links
         g2d.drawString(text, x + 2, y + 3); // Unten rechts
 
-        g2d.setColor(textColor);  // Benutze die übergebene Farbe
+        g2d.setColor(textColor);
         g2d.drawString(text, x, y);
     }
 
@@ -186,42 +186,45 @@ public class Zeitrechner extends JFrame {
         }
     }
 
-    public void stechenScreen() {
+    public void ueberstundenScreen() {
         repaint();
         revalidate();
-
+        ueberstundenPanel.setLayout(null);
         ImageIcon backgroundImageStechen = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
 
-        backgroundPanelStechen = new JPanel(){
+        ueberstundenPanel = new JPanel()
+        {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(backgroundImageStechen.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        backgroundPanelStechen.setSize(800, 600);
-        backgroundPanelStechen.setVisible(true);
-        setContentPane(backgroundPanelStechen);
+        ueberstundenPanel.setSize(800, 600);
+        ueberstundenPanel.setVisible(true);
+      ;
 
+        setContentPane(ueberstundenPanel);
+        ueberstundenPanel.add(ueberstundenLabel);
 
     }
 
-    public void ueberstundenScreen() {
-        repaint();
-        revalidate();
-        backgroundPanelStechen.setVisible(false);
+    public void stechenScreen() {
+
+        backgroundPanelStechen.setLayout(null);
+
         ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
 
-        ueberstundenPanel = new JPanel() {
+        backgroundPanelStechen = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(ueberstundenImage.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
-        ueberstundenPanel.setSize(800, 600);
-        ueberstundenPanel.setVisible(true);
-        setContentPane(ueberstundenPanel);
+        backgroundPanelStechen.setSize(800, 600);
+        backgroundPanelStechen.setVisible(true);
+        setContentPane(backgroundPanelStechen);
 
 
         JLabel ankunftsStundenLabel = new JLabel("") {
@@ -232,7 +235,7 @@ public class Zeitrechner extends JFrame {
             }
         };ankunftsStundenLabel.setBounds(0,0, 500,200);
         ankunftsStundenLabel.setVisible(true);
-        ueberstundenPanel.add(ankunftsStundenLabel);
+        backgroundPanelStechen.add(ankunftsStundenLabel);
 
         ankunftsStundenField = new JTextField();
         ankunftsStundenField.setBounds(370, 83, 150, 25);
@@ -249,7 +252,7 @@ public class Zeitrechner extends JFrame {
             }
         };ankunftsMinutenLabel.setBounds(0,0, 500,400);
         ankunftsMinutenLabel.setVisible(true);
-        ueberstundenPanel.add(ankunftsMinutenLabel);
+        backgroundPanelStechen.add(ankunftsMinutenLabel);
 
         ankunftsMinutenField = new JTextField();
         ankunftsMinutenField.setBounds(370, 183, 150, 25);
@@ -266,7 +269,7 @@ public class Zeitrechner extends JFrame {
             }
         };bleibZeitLabel.setBounds(0,0, 500,400);
         bleibZeitLabel.setVisible(true);
-        ueberstundenPanel.add(bleibZeitLabel);
+        backgroundPanelStechen.add(bleibZeitLabel);
 
         bleibZeitField = new JTextField();
         bleibZeitField.setBounds(370, 283, 150, 25);
@@ -283,38 +286,58 @@ public class Zeitrechner extends JFrame {
             }
         };pausenZeitLabel.setBounds(0,0, 500,500);
         pausenZeitLabel.setVisible(true);
-        ueberstundenPanel.add(pausenZeitLabel);
+        backgroundPanelStechen.add(pausenZeitLabel);
 
         pausenZeitField = new JTextField();
         pausenZeitField.setBounds(370, 383, 150, 25);
         pausenZeitField.setOpaque(false);
         pausenZeitField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         pausenZeitField.setForeground(new Color(255, 98, 50));
-        ueberstundenPanel.add(pausenZeitField);
+        backgroundPanelStechen.add(pausenZeitField);
 
-        JButton berechnenButton = new JButton("Zeit berechnen");
-        berechnenButton.setBounds(20, 500, 200, 30);
-        berechnenButton.setForeground(new java.awt.Color(255, 255, 255));
-        berechnenButton.setBackground(new java.awt.Color(70,70,70));
-        ueberstundenPanel.add(berechnenButton);
 
-        ergebnisLabel = new JLabel("");
-        ergebnisLabel.setBounds(200, 550, 300, 25);
-        ergebnisLabel.setForeground(new java.awt.Color(255, 255, 255));
-        add(ergebnisLabel);
-        ueberstundenPanel.add(ergebnisLabel);
 
-        ueberstundenLabel = new JLabel("");
-        ueberstundenLabel.setBounds(210, 500, 200, 25);
-        ueberstundenLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ueberstundenPanel.add(ueberstundenLabel);
+        JButton berechnenButton = new JButton("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Berechnen", 50, 100, new Color(255, 98, 50));
+            }
+        };
+        berechnenButton.setOpaque(false);
+        berechnenButton.setContentAreaFilled(false);
 
+        berechnenButton.setBounds(50, 400, 460, 150);
         berechnenButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 berechneFeierabendZeit();
                 ueberstunden();
             }
         });
+        backgroundPanelStechen.add(berechnenButton);
+
+
+
+
+        ergebnisLabel = new JLabel();
+        ergebnisLabel.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ergebnisLabel.setForeground(new Color(255, 98, 50));
+        ergebnisLabel.setBounds(20, 500, 300, 50);
+        backgroundPanelStechen.add(ergebnisLabel);
+
+
+        ueberstundenLabel = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            drawTextWithOutline(g, "", 200, 375, new Color(255, 58, 0));
+        }
+        };ueberstundenLabel.setBounds(200,375, 500,500);
+        ueberstundenLabel.setVisible(true);
+        backgroundPanelStechen.add(ueberstundenLabel);
+
+
+
 
     }
 

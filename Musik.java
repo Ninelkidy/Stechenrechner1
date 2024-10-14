@@ -5,7 +5,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 public class Musik {
     public Musik() {
-        String filepath = "loading-screen-189489.wav"; // Musik file name
+        String filepath = "ringdingdong.wav"; // Musik file name
         PlayMusic(filepath);
     }
     // PlayMusic methode geklaut von inder
