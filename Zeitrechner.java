@@ -186,17 +186,15 @@ public class Zeitrechner extends JFrame {
     }
 
     public void ueberstundenScreen() {
-        repaint();
-        revalidate();
 
-        ImageIcon backgroundImageStechen = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
+        ImageIcon backgroundImageueberstunden = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
 
         ueberstundenPanel = new JPanel()
         {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(backgroundImageStechen.getImage(), 0, 0, getWidth(), getHeight(), this);
+                g.drawImage(backgroundImageueberstunden.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
         ueberstundenPanel.setSize(800, 600);
@@ -204,12 +202,10 @@ public class Zeitrechner extends JFrame {
       ;
 
         setContentPane(ueberstundenPanel);
-        ueberstundenPanel.add(ueberstundenLabel);
 
     }
 
     public void stechenScreen() {
-
 
         ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
 
@@ -224,7 +220,6 @@ public class Zeitrechner extends JFrame {
         backgroundPanelStechen.setVisible(true);
         backgroundPanelStechen.setLayout(null);
         setContentPane(backgroundPanelStechen);
-
 
         JLabel ankunftsStundenLabel = new JLabel("") {
             @Override
@@ -294,8 +289,6 @@ public class Zeitrechner extends JFrame {
         pausenZeitField.setForeground(new Color(255, 98, 50));
         backgroundPanelStechen.add(pausenZeitField);
 
-
-
         JButton berechnenButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -307,7 +300,7 @@ public class Zeitrechner extends JFrame {
         berechnenButton.setOpaque(false);
         berechnenButton.setContentAreaFilled(false);
 
-        berechnenButton.setBounds(50, 400, 460, 150);
+        berechnenButton.setBounds(15, 380, 460, 150);
         berechnenButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 berechneFeierabendZeit();
@@ -316,29 +309,17 @@ public class Zeitrechner extends JFrame {
         });
         backgroundPanelStechen.add(berechnenButton);
 
-
-
-
         ergebnisLabel = new JLabel();
         ergebnisLabel.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
         ergebnisLabel.setForeground(new Color(255, 98, 50));
         ergebnisLabel.setBounds(20, 500, 300, 50);
         backgroundPanelStechen.add(ergebnisLabel);
 
-
-        ueberstundenLabel = new JLabel("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            drawTextWithOutline(g, "", 200, 375, new Color(255, 58, 0));
-        }
-        };ueberstundenLabel.setBounds(200,375, 500,500);
-        ueberstundenLabel.setVisible(true);
+        ueberstundenLabel = new JLabel();
+        ueberstundenLabel.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ueberstundenLabel.setForeground(new Color(255, 98, 50));
+        ueberstundenLabel.setBounds(370, 500, 400, 50);
         backgroundPanelStechen.add(ueberstundenLabel);
-
-
-
-
     }
 
 }
