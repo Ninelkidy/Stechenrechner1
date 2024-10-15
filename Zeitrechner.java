@@ -62,7 +62,7 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.setContentAreaFilled(false);
         ueberstundenBalanceButton.setBorderPainted(false);
         ueberstundenBalanceButton.setForeground(new Color(223, 149, 70));
-        ueberstundenBalanceButton.setBounds(160, 170, 450, 100);
+        ueberstundenBalanceButton.setBounds(160, 180, 450, 100);
         ueberstundenBalanceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ueberstundenScreen();
@@ -80,7 +80,7 @@ public class Zeitrechner extends JFrame {
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(223, 149, 70));
-        zeitDesStechensButton.setBounds(180, 190, 470, 200);
+        zeitDesStechensButton.setBounds(180, 175, 470, 200);
         zeitDesStechensButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 stechenScreen();
@@ -184,6 +184,9 @@ public class Zeitrechner extends JFrame {
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
     }
+    public void ueberstundenBerechnen() {
+        //TODO HIER METHODE
+    }
 
     public void ueberstundenScreen() {
 
@@ -199,10 +202,56 @@ public class Zeitrechner extends JFrame {
         };
         ueberstundenPanel.setSize(800, 600);
         ueberstundenPanel.setVisible(true);
-      ;
-
+        ueberstundenPanel.setLayout(null);
         setContentPane(ueberstundenPanel);
 
+        JLabel ueberstundenAnzahlLable = new JLabel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Gesammt Ueberstunden:", 50, 100, new Color(149, 135, 191));
+            }
+        };ueberstundenAnzahlLable.setBounds(0,0, 500,200);
+        ueberstundenAnzahlLable.setVisible(true);
+        ueberstundenPanel.add(ueberstundenAnzahlLable);
+
+        JTextField ueberstundenAnzahlField = new JTextField();
+        ueberstundenAnzahlField.setBounds(530, 83, 150, 25);
+        ueberstundenAnzahlField.setOpaque(false);
+        ueberstundenAnzahlField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        add(ueberstundenAnzahlField);
+
+        JLabel davonverwendenLable = new JLabel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Davon verwenden:", 50, 100, new Color(149, 135, 191));
+            }
+        };davonverwendenLable.setBounds(0,100, 500,200);
+        davonverwendenLable.setVisible(true);
+        ueberstundenPanel.add(davonverwendenLable);
+
+        JTextField davonverwendenField = new JTextField();
+        davonverwendenField.setBounds(400, 183, 150, 25);
+        davonverwendenField.setOpaque(false);
+        davonverwendenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        add(davonverwendenField);
+
+        JLabel wannHeuteGehenLable = new JLabel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Normale Feierabendzeit:", 50,100, new Color(149, 135, 191));
+            }
+        };wannHeuteGehenLable.setBounds(0,200, 500,200);
+        wannHeuteGehenLable.setVisible(true);
+        ueberstundenPanel.add(wannHeuteGehenLable);
+
+        JTextField wannHeuteGehenField = new JTextField();
+        wannHeuteGehenField.setBounds(525, 283, 150, 25);
+        wannHeuteGehenField.setOpaque(false);
+        wannHeuteGehenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        add(wannHeuteGehenField);
     }
 
     public void stechenScreen() {
