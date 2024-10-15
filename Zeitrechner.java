@@ -8,9 +8,8 @@ import java.awt.FontFormatException;
 import java.util.Objects;
 
 public class Zeitrechner extends JFrame {
-    private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField;
+    private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ueberstundenAnzahlField;
     private JLabel ergebnisLabel, ueberstundenLabel, titleLabelMain;
-    private Container con;
     private JButton ueberstundenBalanceButton, zeitDesStechensButton;
     private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel;
 
@@ -159,6 +158,7 @@ public class Zeitrechner extends JFrame {
         }
     }
 
+
     public void berechneFeierabendZeit() {
         int ankunftsStunden = Integer.parseInt(ankunftsStundenField.getText());
         int ankunftsMinuten = Integer.parseInt(ankunftsMinutenField.getText());
@@ -173,6 +173,8 @@ public class Zeitrechner extends JFrame {
         int endStunden = ankunftsStunden + gesamtStunden + extraStunden;
         ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
     }
+
+
     public void ueberstunden() {
         double vorgegebeneArbeitszeit = 7.6 * 60;
         double gesamteArbeitszeit = Double.parseDouble(bleibZeitField.getText());
@@ -186,6 +188,9 @@ public class Zeitrechner extends JFrame {
     }
     public void ueberstundenBerechnen() {
         //TODO HIER METHODE
+        double gesammtUeberstunden = Double.parseDouble(ueberstundenAnzahlField.getText());
+
+
     }
 
     public void ueberstundenScreen() {
@@ -205,21 +210,40 @@ public class Zeitrechner extends JFrame {
         ueberstundenPanel.setLayout(null);
         setContentPane(ueberstundenPanel);
 
-        JLabel ueberstundenAnzahlLable = new JLabel(){
+        JLabel ueberstundenAnzahlLableStunden = new JLabel(){
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Gesammt Ueberstunden:", 50, 100, new Color(149, 135, 191));
+                drawTextWithOutline(g, "Ges. Ueberstunden(H)", 20, 100, new Color(149, 135, 191));
             }
-        };ueberstundenAnzahlLable.setBounds(0,0, 500,200);
-        ueberstundenAnzahlLable.setVisible(true);
-        ueberstundenPanel.add(ueberstundenAnzahlLable);
+        };
+        ueberstundenAnzahlLableStunden.setBounds(0,0, 500,200);
+        ueberstundenAnzahlLableStunden.setVisible(true);
+        ueberstundenPanel.add(ueberstundenAnzahlLableStunden);
 
         JTextField ueberstundenAnzahlField = new JTextField();
-        ueberstundenAnzahlField.setBounds(530, 83, 150, 25);
+        ueberstundenAnzahlField.setBounds(150, 130, 150, 25);
         ueberstundenAnzahlField.setOpaque(false);
         ueberstundenAnzahlField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(ueberstundenAnzahlField);
+
+        JLabel ueberstundenAnzahlLableMinuten = new JLabel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Ges. Ueberstunden(M)", 50, 100, new Color(149, 135, 191));
+            }
+        };
+        ueberstundenAnzahlLableMinuten.setBounds(370,0, 500,200);
+        ueberstundenAnzahlLableMinuten.setVisible(true);
+        ueberstundenPanel.add(ueberstundenAnzahlLableMinuten);
+
+        JTextField ueberstundenAnzahlMinutenField = new JTextField();
+        ueberstundenAnzahlMinutenField.setBounds(350, 130, 150, 25);
+        ueberstundenAnzahlMinutenField.setOpaque(false);
+        ueberstundenAnzahlMinutenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        add(ueberstundenAnzahlMinutenField);
+
 
         JLabel davonverwendenLable = new JLabel(){
             @Override
@@ -232,26 +256,38 @@ public class Zeitrechner extends JFrame {
         ueberstundenPanel.add(davonverwendenLable);
 
         JTextField davonverwendenField = new JTextField();
-        davonverwendenField.setBounds(400, 183, 150, 25);
+        davonverwendenField.setBounds(150, 240, 150, 25);
         davonverwendenField.setOpaque(false);
         davonverwendenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(davonverwendenField);
+
+        JTextField davonverwendenFieldMinuten = new JTextField();
+        davonverwendenFieldMinuten.setBounds(350, 240, 150, 25);
+        davonverwendenFieldMinuten.setOpaque(false);
+        davonverwendenFieldMinuten.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        add(davonverwendenFieldMinuten);
 
         JLabel wannHeuteGehenLable = new JLabel(){
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Normale Feierabendzeit:", 50,100, new Color(149, 135, 191));
+                drawTextWithOutline(g, "Normale Arbeitszeit:", 50,100, new Color(149, 135, 191));
             }
         };wannHeuteGehenLable.setBounds(0,200, 500,200);
         wannHeuteGehenLable.setVisible(true);
         ueberstundenPanel.add(wannHeuteGehenLable);
 
         JTextField wannHeuteGehenField = new JTextField();
-        wannHeuteGehenField.setBounds(525, 283, 150, 25);
+        wannHeuteGehenField.setBounds(150, 330, 150, 25);
         wannHeuteGehenField.setOpaque(false);
         wannHeuteGehenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(wannHeuteGehenField);
+
+        JTextField wannHeuteGehenFieldMinute = new JTextField();
+        wannHeuteGehenFieldMinute.setBounds(350, 330, 150, 25);
+        wannHeuteGehenFieldMinute.setOpaque(false);
+        wannHeuteGehenFieldMinute.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        add(wannHeuteGehenFieldMinute);
     }
 
     public void stechenScreen() {
