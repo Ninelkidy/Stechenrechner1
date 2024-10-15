@@ -8,7 +8,7 @@ import java.awt.FontFormatException;
 import java.util.Objects;
 
 public class Zeitrechner extends JFrame {
-    private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ueberstundenAnzahlField;
+    private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ueberstundenAnzahlField, ueberstundenAnzahlMinutenField;
     private JLabel ergebnisLabel, ueberstundenLabel, titleLabelMain;
     private JButton ueberstundenBalanceButton, zeitDesStechensButton;
     private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel;
@@ -158,7 +158,6 @@ public class Zeitrechner extends JFrame {
         }
     }
 
-
     public void berechneFeierabendZeit() {
         int ankunftsStunden = Integer.parseInt(ankunftsStundenField.getText());
         int ankunftsMinuten = Integer.parseInt(ankunftsMinutenField.getText());
@@ -174,7 +173,6 @@ public class Zeitrechner extends JFrame {
         ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
     }
 
-
     public void ueberstunden() {
         double vorgegebeneArbeitszeit = 7.6 * 60;
         double gesamteArbeitszeit = Double.parseDouble(bleibZeitField.getText());
@@ -188,11 +186,11 @@ public class Zeitrechner extends JFrame {
     }
     public void ueberstundenBerechnen() {
         //TODO HIER METHODE
-        double gesammtUeberstunden = Double.parseDouble(ueberstundenAnzahlField.getText());
+        int gesammtUeberstundenStunden = Integer.parseInt(ueberstundenAnzahlField.getText());
+        int gesammtUeberstundenMinuten = Integer.parseInt(ueberstundenAnzahlMinutenField.getText());
 
 
     }
-
     public void ueberstundenScreen() {
 
         ImageIcon backgroundImageueberstunden = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
