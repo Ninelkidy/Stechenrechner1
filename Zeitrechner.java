@@ -8,7 +8,8 @@ import java.awt.FontFormatException;
 import java.util.Objects;
 
 public class Zeitrechner extends JFrame {
-    private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ueberstundenAnzahlField, ueberstundenAnzahlMinutenField;
+    private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ueberstundenAnzahlField, ueberstundenAnzahlMinutenField,
+            davonverwendenField,davonverwendenFieldMinuten, wannHeuteGehenFieldMinute   ;
     private JLabel ergebnisLabel, ueberstundenLabel, titleLabelMain;
     private JButton ueberstundenBalanceButton, zeitDesStechensButton;
     private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel;
@@ -186,8 +187,35 @@ public class Zeitrechner extends JFrame {
     }
     public void ueberstundenBerechnen() {
         //TODO HIER METHODE
-        int gesammtUeberstundenStunden = Integer.parseInt(ueberstundenAnzahlField.getText());
-        int gesammtUeberstundenMinuten = Integer.parseInt(ueberstundenAnzahlMinutenField.getText());
+
+        int gesamtUeberStunden = Integer.parseInt(ueberstundenAnzahlField.getText()); // Wie viele überstunden man hat
+        int gesamtUeberMinuten = Integer.parseInt(ueberstundenAnzahlMinutenField.getText());;
+        int UeberEndMinuten = gesamtUeberStunden + gesamtUeberMinuten;
+
+        int abziehenStunden = Integer.parseInt(davonverwendenField.getText());  //Wie viele man abziehen will
+        int abziehenMinuten = Integer.parseInt(davonverwendenFieldMinuten.getText());
+        int abziehenEndMinuten = abziehenStunden + abziehenMinuten;
+
+        int uebrigeMinuten = UeberEndMinuten - abziehenEndMinuten;
+        int uebrigeStundenInt = uebrigeMinuten / 60;
+        double uebrigeStunden = (double) uebrigeMinuten / 60;
+        double zwischenStunden = uebrigeStundenInt;
+        double ueberstudenEndMinuten = (uebrigeStunden - zwischenStunden) * 60;
+        int ueberstudenEndMinutenInt = (int) Math.round(ueberstudenEndMinuten);
+
+
+
+        int arbeitAusStunden = Integer.parseInt(davonverwendenFieldMinuten.getText());   //Wann man laut Stechenrechner gehen darf
+        int arbeitAusMinuten = Integer.parseInt(wannHeuteGehenFieldMinute.getText());
+        int arbeitAusZeit = arbeitAusStunden + arbeitAusMinuten;
+
+        int endArbeitAusZeit = arbeitAusZeit - uebrigeMinuten;
+        int arbeitAusInt = endArbeitAusZeit / 60;
+        double arbeitAusStundenDouble = (double) endArbeitAusZeit / 60;
+        double zwischenArbeitAusStunden = arbeitAusInt;
+        double arbeitAusEndMinuten = (arbeitAusStundenDouble - zwischenArbeitAusStunden) * 60;
+        int arbeitAusEndMinutenInt = (int) Math.round(arbeitAusEndMinuten);
+
 
 
     }
