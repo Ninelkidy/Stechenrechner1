@@ -195,7 +195,7 @@ public class Zeitrechner extends JFrame {
         int abziehenStunden = Integer.parseInt(davonverwendenField.getText());  //Wie viele man abziehen will
         int abziehenMinuten = Integer.parseInt(davonverwendenFieldMinuten.getText());
         int abziehenEndMinuten = abziehenStunden + abziehenMinuten;
-
+ =
         int uebrigeMinuten = UeberEndMinuten - abziehenEndMinuten;
         int uebrigeStundenInt = uebrigeMinuten / 60;
         double uebrigeStunden = (double) uebrigeMinuten / 60;
