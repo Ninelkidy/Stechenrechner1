@@ -9,10 +9,10 @@ import java.util.Objects;
 
 public class Zeitrechner extends JFrame {
     private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ueberstundenAnzahlField, ueberstundenAnzahlMinutenField,
-            davonverwendenField,davonverwendenFieldMinuten, wannHeuteGehenFieldMinute   ;
-    private JLabel ergebnisLabel, ueberstundenLabel, titleLabelMain;
-    private JButton ueberstundenBalanceButton, zeitDesStechensButton;
-    private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel;
+            davonverwendenField,davonverwendenFieldMinuten, wannHeuteGehenFieldMinute, wannHeuteGehenField   ;
+    private JLabel ergebnisLabel, ueberstundenLabel, titleLabelMain, ergebnisLableUeberstunden;
+    private JButton ueberstundenBalanceButton, zeitDesStechensButton, berechnenButtonUeberstunden;
+    private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel ;
 
 
 
@@ -188,11 +188,11 @@ public class Zeitrechner extends JFrame {
     public void ueberstundenBerechnen() {
         //TODO HIER METHODE
 
-        int gesamtUeberStunden = Integer.parseInt(ueberstundenAnzahlField.getText()); // Wie viele überstunden man hat
+        int gesamtUeberStunden = (Integer.parseInt(ueberstundenAnzahlField.getText()))*60; // Wie viele überstunden man hat
         int gesamtUeberMinuten = Integer.parseInt(ueberstundenAnzahlMinutenField.getText());;
         int UeberEndMinuten = gesamtUeberStunden + gesamtUeberMinuten;
 
-        int abziehenStunden = Integer.parseInt(davonverwendenField.getText());  //Wie viele man abziehen will
+        int abziehenStunden = (Integer.parseInt(davonverwendenField.getText()))*60;  //Wie viele man abziehen will
         int abziehenMinuten = Integer.parseInt(davonverwendenFieldMinuten.getText());
         int abziehenEndMinuten = abziehenStunden + abziehenMinuten;
 
@@ -205,17 +205,19 @@ public class Zeitrechner extends JFrame {
 
 
 
-        int arbeitAusStunden = Integer.parseInt(davonverwendenFieldMinuten.getText());   //Wann man laut Stechenrechner gehen darf
+        int arbeitAusStunden = (Integer.parseInt(wannHeuteGehenField.getText()))*60;   //Wann man laut Stechenrechner gehen darf
         int arbeitAusMinuten = Integer.parseInt(wannHeuteGehenFieldMinute.getText());
         int arbeitAusZeit = arbeitAusStunden + arbeitAusMinuten;
 
-        int endArbeitAusZeit = arbeitAusZeit - uebrigeMinuten;
+        int endArbeitAusZeit = arbeitAusZeit - abziehenEndMinuten;
         int arbeitAusInt = endArbeitAusZeit / 60;
         double arbeitAusStundenDouble = (double) endArbeitAusZeit / 60;
         double zwischenArbeitAusStunden = arbeitAusInt;
         double arbeitAusEndMinuten = (arbeitAusStundenDouble - zwischenArbeitAusStunden) * 60;
         int arbeitAusEndMinutenInt = (int) Math.round(arbeitAusEndMinuten);
 
+        System.out.println(endArbeitAusZeit);
+        ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
 
 
     }
@@ -240,35 +242,25 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Ges. Ueberstunden(H)", 20, 100, new Color(149, 135, 191));
+                drawTextWithOutline(g, "Gesammt Ueberstunden:", 50, 100, new Color(149, 135, 191));
             }
         };
         ueberstundenAnzahlLableStunden.setBounds(0,0, 500,200);
         ueberstundenAnzahlLableStunden.setVisible(true);
         ueberstundenPanel.add(ueberstundenAnzahlLableStunden);
 
-        JTextField ueberstundenAnzahlField = new JTextField();
+        ueberstundenAnzahlField = new JTextField();
         ueberstundenAnzahlField.setBounds(150, 130, 150, 25);
         ueberstundenAnzahlField.setOpaque(false);
         ueberstundenAnzahlField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
-        add(ueberstundenAnzahlField);
+        ueberstundenPanel.add(ueberstundenAnzahlField);
 
-        JLabel ueberstundenAnzahlLableMinuten = new JLabel(){
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                drawTextWithOutline(g, "Ges. Ueberstunden(M)", 50, 100, new Color(149, 135, 191));
-            }
-        };
-        ueberstundenAnzahlLableMinuten.setBounds(370,0, 500,200);
-        ueberstundenAnzahlLableMinuten.setVisible(true);
-        ueberstundenPanel.add(ueberstundenAnzahlLableMinuten);
 
-        JTextField ueberstundenAnzahlMinutenField = new JTextField();
+        ueberstundenAnzahlMinutenField = new JTextField();
         ueberstundenAnzahlMinutenField.setBounds(350, 130, 150, 25);
         ueberstundenAnzahlMinutenField.setOpaque(false);
         ueberstundenAnzahlMinutenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
-        add(ueberstundenAnzahlMinutenField);
+        ueberstundenPanel.add(ueberstundenAnzahlMinutenField);
 
 
         JLabel davonverwendenLable = new JLabel(){
@@ -281,13 +273,13 @@ public class Zeitrechner extends JFrame {
         davonverwendenLable.setVisible(true);
         ueberstundenPanel.add(davonverwendenLable);
 
-        JTextField davonverwendenField = new JTextField();
+        davonverwendenField = new JTextField();
         davonverwendenField.setBounds(150, 240, 150, 25);
         davonverwendenField.setOpaque(false);
         davonverwendenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(davonverwendenField);
 
-        JTextField davonverwendenFieldMinuten = new JTextField();
+        davonverwendenFieldMinuten = new JTextField();
         davonverwendenFieldMinuten.setBounds(350, 240, 150, 25);
         davonverwendenFieldMinuten.setOpaque(false);
         davonverwendenFieldMinuten.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
@@ -303,18 +295,45 @@ public class Zeitrechner extends JFrame {
         wannHeuteGehenLable.setVisible(true);
         ueberstundenPanel.add(wannHeuteGehenLable);
 
-        JTextField wannHeuteGehenField = new JTextField();
+        wannHeuteGehenField = new JTextField();
         wannHeuteGehenField.setBounds(150, 330, 150, 25);
         wannHeuteGehenField.setOpaque(false);
         wannHeuteGehenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(wannHeuteGehenField);
 
-        JTextField wannHeuteGehenFieldMinute = new JTextField();
+        wannHeuteGehenFieldMinute = new JTextField();
         wannHeuteGehenFieldMinute.setBounds(350, 330, 150, 25);
         wannHeuteGehenFieldMinute.setOpaque(false);
         wannHeuteGehenFieldMinute.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(wannHeuteGehenFieldMinute);
-    }
+
+        ergebnisLableUeberstunden = new JLabel();
+        ergebnisLableUeberstunden.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ergebnisLableUeberstunden.setForeground(new Color(149, 135, 191));
+        ergebnisLableUeberstunden.setBounds(70, 500, 500, 50);
+        ueberstundenPanel.add(ergebnisLableUeberstunden);
+
+        JButton berechnenButtonUeberstunden = new JButton("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Berechnen", 50, 100, new Color(149, 135, 191));
+            }
+        };
+        berechnenButtonUeberstunden.setBorderPainted(false);
+        berechnenButtonUeberstunden.setOpaque(false);
+        berechnenButtonUeberstunden.setContentAreaFilled(false);
+
+        berechnenButtonUeberstunden.setBounds(15, 380, 300, 150);
+        berechnenButtonUeberstunden.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ueberstundenBerechnen();
+            }
+        });
+        ueberstundenPanel.add(berechnenButtonUeberstunden);
+        }
+
+    //-------------------------------------------------------------------------------------------------------------------
 
     public void stechenScreen() {
 
