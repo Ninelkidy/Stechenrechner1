@@ -105,7 +105,7 @@ public class Zeitrechner extends JFrame {
 
     public void drawTextWithOutline(Graphics g, String text, int x, int y) {
         Graphics2D g2d = (Graphics2D) g;
-        Font font = loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.ITALIC, 65);
+        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, 65);
         g2d.setFont(font);
 
         g2d.setColor(new Color(0x2D2D4C));
@@ -119,7 +119,7 @@ public class Zeitrechner extends JFrame {
 
     public void drawTextWithOutline2(Graphics g, String text, int x, int y) {
         Graphics2D g2d = (Graphics2D) g;
-        Font font = loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.ITALIC, 30);
+        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, 30);
         g2d.setFont(font);
 
         g2d.setColor(new Color(0x2D2D4C));
@@ -133,7 +133,7 @@ public class Zeitrechner extends JFrame {
     }
     public void drawTextWithOutline(Graphics g, String text, int x, int y, Color textColor) {
         Graphics2D g2d = (Graphics2D) g;
-        Font font = loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.ITALIC, 30);
+        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, 30);
         g2d.setFont(font);
 
         g2d.setColor(new Color(0x2D2D4C));
@@ -195,7 +195,7 @@ public class Zeitrechner extends JFrame {
         int abziehenStunden = Integer.parseInt(davonverwendenField.getText());  //Wie viele man abziehen will
         int abziehenMinuten = Integer.parseInt(davonverwendenFieldMinuten.getText());
         int abziehenEndMinuten = abziehenStunden + abziehenMinuten;
- =
+
         int uebrigeMinuten = UeberEndMinuten - abziehenEndMinuten;
         int uebrigeStundenInt = uebrigeMinuten / 60;
         double uebrigeStunden = (double) uebrigeMinuten / 60;
@@ -250,7 +250,7 @@ public class Zeitrechner extends JFrame {
         JTextField ueberstundenAnzahlField = new JTextField();
         ueberstundenAnzahlField.setBounds(150, 130, 150, 25);
         ueberstundenAnzahlField.setOpaque(false);
-        ueberstundenAnzahlField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ueberstundenAnzahlField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(ueberstundenAnzahlField);
 
         JLabel ueberstundenAnzahlLableMinuten = new JLabel(){
@@ -267,7 +267,7 @@ public class Zeitrechner extends JFrame {
         JTextField ueberstundenAnzahlMinutenField = new JTextField();
         ueberstundenAnzahlMinutenField.setBounds(350, 130, 150, 25);
         ueberstundenAnzahlMinutenField.setOpaque(false);
-        ueberstundenAnzahlMinutenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ueberstundenAnzahlMinutenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(ueberstundenAnzahlMinutenField);
 
 
@@ -284,13 +284,13 @@ public class Zeitrechner extends JFrame {
         JTextField davonverwendenField = new JTextField();
         davonverwendenField.setBounds(150, 240, 150, 25);
         davonverwendenField.setOpaque(false);
-        davonverwendenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        davonverwendenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(davonverwendenField);
 
         JTextField davonverwendenFieldMinuten = new JTextField();
         davonverwendenFieldMinuten.setBounds(350, 240, 150, 25);
         davonverwendenFieldMinuten.setOpaque(false);
-        davonverwendenFieldMinuten.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        davonverwendenFieldMinuten.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(davonverwendenFieldMinuten);
 
         JLabel wannHeuteGehenLable = new JLabel(){
@@ -306,13 +306,13 @@ public class Zeitrechner extends JFrame {
         JTextField wannHeuteGehenField = new JTextField();
         wannHeuteGehenField.setBounds(150, 330, 150, 25);
         wannHeuteGehenField.setOpaque(false);
-        wannHeuteGehenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        wannHeuteGehenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(wannHeuteGehenField);
 
         JTextField wannHeuteGehenFieldMinute = new JTextField();
         wannHeuteGehenFieldMinute.setBounds(350, 330, 150, 25);
         wannHeuteGehenFieldMinute.setOpaque(false);
-        wannHeuteGehenFieldMinute.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        wannHeuteGehenFieldMinute.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         add(wannHeuteGehenFieldMinute);
     }
 
@@ -345,7 +345,7 @@ public class Zeitrechner extends JFrame {
         ankunftsStundenField = new JTextField();
         ankunftsStundenField.setBounds(370, 83, 150, 25);
         ankunftsStundenField.setOpaque(false);
-        ankunftsStundenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ankunftsStundenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         ankunftsStundenField.setForeground(new Color(255, 98, 50));
         add(ankunftsStundenField);
 
@@ -362,7 +362,7 @@ public class Zeitrechner extends JFrame {
         ankunftsMinutenField = new JTextField();
         ankunftsMinutenField.setBounds(370, 183, 150, 25);
         ankunftsMinutenField.setOpaque(false);
-        ankunftsMinutenField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ankunftsMinutenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         ankunftsMinutenField.setForeground(new Color(255, 98, 50));
         add(ankunftsMinutenField);
 
@@ -379,7 +379,7 @@ public class Zeitrechner extends JFrame {
         bleibZeitField = new JTextField();
         bleibZeitField.setBounds(370, 283, 150, 25);
         bleibZeitField.setOpaque(false);
-        bleibZeitField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        bleibZeitField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         bleibZeitField.setForeground(new Color(255, 98, 50));
         add(bleibZeitField);
 
@@ -396,7 +396,7 @@ public class Zeitrechner extends JFrame {
         pausenZeitField = new JTextField();
         pausenZeitField.setBounds(370, 383, 150, 25);
         pausenZeitField.setOpaque(false);
-        pausenZeitField.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        pausenZeitField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
         pausenZeitField.setForeground(new Color(255, 98, 50));
         backgroundPanelStechen.add(pausenZeitField);
 
@@ -421,13 +421,13 @@ public class Zeitrechner extends JFrame {
         backgroundPanelStechen.add(berechnenButton);
 
         ergebnisLabel = new JLabel();
-        ergebnisLabel.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ergebnisLabel.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
         ergebnisLabel.setForeground(new Color(255, 98, 50));
         ergebnisLabel.setBounds(20, 500, 300, 50);
         backgroundPanelStechen.add(ergebnisLabel);
 
         ueberstundenLabel = new JLabel();
-        ueberstundenLabel.setFont(loadCustomFont("C:/Users/Alina Baum/Downloads/invasion2000//INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ueberstundenLabel.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
         ueberstundenLabel.setForeground(new Color(255, 98, 50));
         ueberstundenLabel.setBounds(370, 500, 400, 50);
         backgroundPanelStechen.add(ueberstundenLabel);
