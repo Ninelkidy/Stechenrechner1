@@ -5,15 +5,29 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.awt.FontFormatException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Zeitrechner extends JFrame {
-    private JTextField ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ueberstundenAnzahlField, ueberstundenAnzahlMinutenField,
-            davonverwendenField,davonverwendenFieldMinuten, wannHeuteGehenFieldMinute, wannHeuteGehenField   ;
-    private JLabel ergebnisLabel, ueberstundenLabel, titleLabelMain, ergebnisLableUeberstunden;
-    private JButton ueberstundenBalanceButton, zeitDesStechensButton, berechnenButtonUeberstunden;
-    private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel ;
+    private JTextField ankunftsStundenField;
+    private JTextField ankunftsMinutenField;
+    private JTextField bleibZeitField;
+    private JTextField pausenZeitField;
+    private static JTextField ueberstundenAnzahlField;
+    private static JTextField ueberstundenAnzahlMinutenField;
+    private static JTextField davonverwendenField;
+    private static JTextField davonverwendenFieldMinuten;
+    private static JTextField wannHeuteGehenFieldMinute;
+    private static JTextField wannHeuteGehenField   ;
+    private JLabel ergebnisLabel;
+    private JLabel ueberstundenLabel;
+    private JLabel titleLabelMain;
+    private static JLabel ergebnisLableUeberstunden;
+    private JButton ueberstundenBalanceButton, zeitDesStechensButton, berechnenButtonUeberstunden, speichern;
+    private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel,speichernPanel ;
 
+    TitleScreenHandler tsHandler = new TitleScreenHandler();
+    ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -66,6 +80,7 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ueberstundenScreen();
+
             }
         });
 
@@ -81,11 +96,7 @@ public class Zeitrechner extends JFrame {
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(223, 149, 70));
         zeitDesStechensButton.setBounds(180, 175, 470, 200);
-        zeitDesStechensButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                stechenScreen();
-            }
-        });
+        zeitDesStechensButton.addActionListener(tsHandler);
 
         backgroundPanel.add(ueberstundenBalanceButton);
         backgroundPanel.add(zeitDesStechensButton);
@@ -185,8 +196,8 @@ public class Zeitrechner extends JFrame {
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
     }
-    public void ueberstundenBerechnen() {
-        //TODO HIER METHODE
+    public ArrayList<Integer> ueberstundenBerechnen() {
+        //TODO hiiiiiiiiiiiiiiiiiiier
 
         int gesamtUeberStunden = (Integer.parseInt(ueberstundenAnzahlField.getText()))*60; // Wie viele überstunden man hat
         int gesamtUeberMinuten = Integer.parseInt(ueberstundenAnzahlMinutenField.getText());;
@@ -203,8 +214,6 @@ public class Zeitrechner extends JFrame {
         double ueberstudenEndMinuten = (uebrigeStunden - zwischenStunden) * 60;
         int ueberstudenEndMinutenInt = (int) Math.round(ueberstudenEndMinuten);
 
-
-
         int arbeitAusStunden = (Integer.parseInt(wannHeuteGehenField.getText()))*60;   //Wann man laut Stechenrechner gehen darf
         int arbeitAusMinuten = Integer.parseInt(wannHeuteGehenFieldMinute.getText());
         int arbeitAusZeit = arbeitAusStunden + arbeitAusMinuten;
@@ -219,6 +228,11 @@ public class Zeitrechner extends JFrame {
         System.out.println(endArbeitAusZeit);
         ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
 
+        ueberstundenRueckgabe.set(0, uebrigeStundenInt);
+        ueberstundenRueckgabe.set(1, ueberstudenEndMinutenInt);
+
+
+        return ueberstundenRueckgabe;
 
     }
     public void ueberstundenScreen() {
@@ -335,7 +349,7 @@ public class Zeitrechner extends JFrame {
 
     //-------------------------------------------------------------------------------------------------------------------
 
-    public void stechenScreen() {
+    public JPanel stechenScreen() {
 
         ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
 
@@ -437,6 +451,7 @@ public class Zeitrechner extends JFrame {
                 ueberstunden();
             }
         });
+
         backgroundPanelStechen.add(berechnenButton);
 
         ergebnisLabel = new JLabel();
@@ -450,6 +465,38 @@ public class Zeitrechner extends JFrame {
         ueberstundenLabel.setForeground(new Color(255, 98, 50));
         ueberstundenLabel.setBounds(370, 500, 400, 50);
         backgroundPanelStechen.add(ueberstundenLabel);
+
+        return backgroundPanelStechen;
     }
 
+    public void speichernButton() {
+
+        System.out.println("Hier ist: " + ueberstundenRueckgabe.get(0));
+
+        speichern = new JButton("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "speichern", 50, 100, new Color(255, 98, 50));
+            }
+        };
+        speichern.setBorderPainted(false);
+        speichern.setOpaque(false);
+        speichern.setContentAreaFilled(false);
+
+        speichern.setBounds(300, 380, 460, 150);
+        speichern.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CustomFileWriter.writeFile(ueberstundenRueckgabe);
+            }
+        });
+        backgroundPanelStechen.add(speichern);
+    }
+    public class TitleScreenHandler implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            stechenScreen();
+            speichernButton();
+        }
+    }
 }
+
