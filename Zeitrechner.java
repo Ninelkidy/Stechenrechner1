@@ -27,7 +27,8 @@ public class Zeitrechner extends JFrame {
     private JPanel backgroundPanel, backgroundPanelStechen, ueberstundenPanel,speichernPanel ;
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
-    ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
+    ArrayList<Integer> ueberstundenRueckgabeKopie = new ArrayList<>();
+
 
 
     public static void main(String[] args) {
@@ -196,8 +197,10 @@ public class Zeitrechner extends JFrame {
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
     }
-    public ArrayList<Integer> ueberstundenBerechnen() {
+    public ArrayList ueberstundenBerechnen() {
         //TODO hiiiiiiiiiiiiiiiiiiier
+
+
 
         int gesamtUeberStunden = (Integer.parseInt(ueberstundenAnzahlField.getText()))*60; // Wie viele überstunden man hat
         int gesamtUeberMinuten = Integer.parseInt(ueberstundenAnzahlMinutenField.getText());;
@@ -229,11 +232,14 @@ public class Zeitrechner extends JFrame {
         System.out.println(endArbeitAusZeit);
         ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
 
-        ueberstundenRueckgabe.set(0, uebrigeStundenInt);
-        ueberstundenRueckgabe.set(1, ueberstudenEndMinutenInt);
+        ueberstundenRueckgabeKopie.add(1);
+        ueberstundenRueckgabeKopie.add(2);
 
 
-        return ueberstundenRueckgabe;
+
+        return ueberstundenRueckgabeKopie;
+
+
 
     }
     public void ueberstundenScreen() {
@@ -343,6 +349,7 @@ public class Zeitrechner extends JFrame {
         berechnenButtonUeberstunden.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ueberstundenBerechnen();
+
             }
         });
         ueberstundenPanel.add(berechnenButtonUeberstunden);
@@ -448,8 +455,11 @@ public class Zeitrechner extends JFrame {
         berechnenButton.setBounds(15, 380, 460, 150);
         berechnenButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 berechneFeierabendZeit();
                 ueberstunden();
+
+
             }
         });
 
@@ -471,8 +481,7 @@ public class Zeitrechner extends JFrame {
     }
 
     public void speichernButton() {
-
-        System.out.println("Hier ist: " + ueberstundenRueckgabe.get(0));
+        ArrayList<Integer> ueberstundenRueckgabe = ueberstundenRueckgabeKopie;
 
         speichern = new JButton("") {
             @Override
@@ -489,14 +498,17 @@ public class Zeitrechner extends JFrame {
         speichern.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CustomFileWriter.writeFile(ueberstundenRueckgabe);
+
             }
         });
         backgroundPanelStechen.add(speichern);
+
     }
     public class TitleScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             stechenScreen();
             speichernButton();
+
         }
     }
 }

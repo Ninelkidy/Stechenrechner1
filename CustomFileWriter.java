@@ -9,7 +9,7 @@ public class CustomFileWriter {
     public static void writeFile(ArrayList ueberstundenRueckgabe) {
 
         try {
-            FileWriter writer = new FileWriter("C:/Users/Alina Baum/Documents/ueberstunden/Ueberstunden.txt");
+            FileWriter writer = new FileWriter("C:/Users/Matija Jandri/Documents/ueberstunden/Ueberstunden.txt");
             writer.write(ueberstundenRueckgabe.toString());
             writer.close();
         } catch (IOException e) {
