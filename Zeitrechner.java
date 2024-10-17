@@ -225,6 +225,7 @@ public class Zeitrechner extends JFrame {
         double arbeitAusEndMinuten = (arbeitAusStundenDouble - zwischenArbeitAusStunden) * 60;
         int arbeitAusEndMinutenInt = (int) Math.round(arbeitAusEndMinuten);
 
+
         System.out.println(endArbeitAusZeit);
         ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
 
