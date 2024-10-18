@@ -23,13 +23,15 @@ public class Zeitrechner extends JFrame {
     private JLabel ueberstundenLabel;
     private JLabel titleLabelMain;
     private static JLabel ergebnisLableUeberstunden;
-    private JButton ueberstundenBalanceButton, zeitDesStechensButton, speichern, returnButton, berechnenButton;
+    private JButton returnButton;
+    private JButton berechnenButton;
     private JPanel  backgroundPanelStechen, ueberstundenPanel;
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
 
     public static void main(String[] args) {
+        UniversalDirectory.universalDirectory();
         SwingUtilities.invokeLater(() -> new Zeitrechner());
         new Musik();
     }
@@ -62,12 +64,13 @@ public class Zeitrechner extends JFrame {
         backgroundPanel.add(titleLabelMain);
         setVisible(true);
 
-        ueberstundenBalanceButton = new JButton("") {
+        JButton ueberstundenBalanceButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 drawTextWithOutline(g, "Ueberstundenbalance", 50, 60, new Color(223, 149, 70), 30);
-            }};
+            }
+        };
         ueberstundenBalanceButton.setOpaque(false);
         ueberstundenBalanceButton.setContentAreaFilled(false);
         ueberstundenBalanceButton.setBorderPainted(false);
@@ -78,12 +81,13 @@ public class Zeitrechner extends JFrame {
                 ueberstundenScreen();
             }});
 
-        zeitDesStechensButton = new JButton("") {
+        JButton zeitDesStechensButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 drawTextWithOutline(g, "Zeit des Stechens", 50, 150, new Color(223, 149, 70), 30);
-            }};
+            }
+        };
         zeitDesStechensButton.setOpaque(false);
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
@@ -144,7 +148,7 @@ public class Zeitrechner extends JFrame {
         int endStunden = ankunftsStunden + gesamtStunden + extraStunden;
         ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
     }
-    public ArrayList<Integer> ueberstunden() {
+    public void ueberstunden() {
         double vorgegebeneArbeitszeit = 7.6 * 60;
         double gesamteArbeitszeit = Double.parseDouble(bleibZeitField.getText());
         int arbeitszeitInMinuten = (int) (gesamteArbeitszeit * 60);
@@ -155,7 +159,6 @@ public class Zeitrechner extends JFrame {
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
         ueberstundenRueckgabe.add(ueberstundenInMinuten);
-        return ueberstundenRueckgabe;
     }
     public void ueberstundenBerechnen() {
 
@@ -320,7 +323,6 @@ public class Zeitrechner extends JFrame {
                 super.paintComponent(g);
                 g.drawImage(ueberstundenImage.getImage(), 0, 0, getWidth(), getHeight(), this);
             }};
-
         backgroundPanelStechen.setSize(800, 600);
         backgroundPanelStechen.setVisible(true);
         backgroundPanelStechen.setLayout(null);
@@ -442,12 +444,11 @@ public class Zeitrechner extends JFrame {
         ueberstundenLabel.setForeground(new Color(255, 98, 50));
         ueberstundenLabel.setBounds(370, 500, 400, 50);
         backgroundPanelStechen.add(ueberstundenLabel);
-
     }
 
     public void speichernButton() {
 
-        speichern = new JButton("") {
+        JButton speichern = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -464,7 +465,6 @@ public class Zeitrechner extends JFrame {
                 CustomFileWriter.writeFile(ueberstundenRueckgabe);
             }
         });backgroundPanelStechen.add(speichern);
-
     }
     public class TitleScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
