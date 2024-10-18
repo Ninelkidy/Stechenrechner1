@@ -223,14 +223,6 @@ public class Zeitrechner extends JFrame {
         backgroundPanel.add(ueberstundenBalanceButton);
         backgroundPanel.add(zeitDesStechensButton);
 
-        backgroundPanelStechen = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon backgroundImage = new ImageIcon("background1.png");
-                g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }};
-        backgroundPanelStechen.setLayout(null);
     }
     //--------------------------------------------------------------------------------------------------------------------
 
