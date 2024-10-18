@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ZeitrechnerPremium extends JFrame {
+    private int waveOffset = 0;  // Variable für den Wellen-Offset
+    private Timer waveTimer;     // Timer für die Animation
+
     private JTextField ankunftsStundenField;
     private JTextField ankunftsMinutenField;
     private JTextField bleibZeitField;
@@ -18,12 +21,12 @@ public class ZeitrechnerPremium extends JFrame {
     private static JTextField davonverwendenField;
     private static JTextField davonverwendenFieldMinuten;
     private static JTextField wannHeuteGehenFieldMinute;
-    private static JTextField wannHeuteGehenField   ;
+    private static JTextField wannHeuteGehenField;
     private JLabel ergebnisLabel;
     private JLabel ueberstundenLabel;
     private static JLabel ergebnisLableUeberstunden;
     private JButton returnButton;
-    private JPanel  backgroundPanelStechen;
+    private JPanel backgroundPanelStechen;
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
@@ -41,7 +44,7 @@ public class ZeitrechnerPremium extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
 
-        //TODO bild aendern
+        // TODO bild aendern
         ImageIcon backgroundImage = new ImageIcon("bubbles.png");
 
         JPanel backgroundPanel = new JPanel() {
@@ -49,7 +52,8 @@ public class ZeitrechnerPremium extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }};
+            }
+        };
         backgroundPanel.setLayout(null);
         setContentPane(backgroundPanel);
 
@@ -60,7 +64,7 @@ public class ZeitrechnerPremium extends JFrame {
                 drawTextWithOutline(g, "Zeitenrechner", 50, 100, new Color(120, 120, 120), 70);
             }
         };
-        titleLabelMain.setBounds(70, 100, 700, 200);
+        titleLabelMain.setBounds(60, 100, 700, 200);
         backgroundPanel.add(titleLabelMain);
         setVisible(true);
 
@@ -89,28 +93,50 @@ public class ZeitrechnerPremium extends JFrame {
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(120, 120, 120));
-        zeitDesStechensButton.setBounds(120, 300, 550, 200);
+        zeitDesStechensButton.setBounds(130, 250, 550, 200);
         zeitDesStechensButton.addActionListener(tsHandler);
 
         backgroundPanel.add(ueberstundenBalanceButton);
         backgroundPanel.add(zeitDesStechensButton);
+
+        // Timer für die Wellenbewegung starten
+        waveTimer = new Timer(50, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                waveOffset += 10; // Wellenbewegung anpassen (kann größer oder kleiner sein)
+                if (waveOffset > getWidth()) {
+                    waveOffset = 0;  // Zurücksetzen, wenn es zu groß wird
+                }
+                repaint();  // Komponente neu zeichnen
+            }
+        });
+        waveTimer.start();
     }
+
     //--------------------------------------------------------------------------------------------------------------------
 
-    public void drawTextWithOutline(Graphics g, String text, int x, int y, Color textColor , int z) {
+    public void drawTextWithOutline(Graphics g, String text, int x, int y, Color textColor, int z) {
         Graphics2D g2d = (Graphics2D) g;
         Font font = loadCustomFont(Font.PLAIN, z);
         g2d.setFont(font);
 
-        g2d.setColor(new Color(0x54000000, true));
+        // Dynamischer Gradient (die Wellenbewegung erfolgt über waveOffset)
+        int gradientStartX = waveOffset;
+        int gradientEndX = waveOffset + 200;  // Die Länge des Verlaufs kann angepasst werden
+        GradientPaint metallicPaint = new GradientPaint(gradientStartX, 0, Color.LIGHT_GRAY, gradientEndX, 50, Color.DARK_GRAY, true);
+
+        // Text mit metallischem Verlauf zeichnen
+        g2d.setPaint(metallicPaint);
+        g2d.drawString(text, x, y);
+
+     /*   // Optional: Textumrandung (Schattierung)
+        g2d.setColor(new Color(0x54000000, true)); // Transparenter Schatten
         g2d.drawString(text, x - 3, y - 3); // Oben links
         g2d.drawString(text, x + 3, y - 3); // Oben rechts
         g2d.drawString(text, x - 3, y + 3); // Unten links
-        g2d.drawString(text, x + 3, y + 3); // Unten rechts
-
-        g2d.setColor(textColor);
-        g2d.drawString(text, x, y);
+        g2d.drawString(text, x + 3, y + 3); // Unten rechts */
     }
+
     private Font loadCustomFont(int style, float size) {
         try {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font5.ttf")).deriveFont(style, size);
@@ -122,7 +148,8 @@ public class ZeitrechnerPremium extends JFrame {
             return new Font("Serif", Font.PLAIN, 12);
         }
     }
-    public void berechneFeierabendZeit() {
+
+public void berechneFeierabendZeit() {
         int ankunftsStunden = Integer.parseInt(ankunftsStundenField.getText());
         int ankunftsMinuten = Integer.parseInt(ankunftsMinutenField.getText());
         double bleibZeit = Double.parseDouble(bleibZeitField.getText());
