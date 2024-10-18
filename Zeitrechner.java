@@ -2,17 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.awt.FontFormatException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.Point;
 
 public class Zeitrechner extends JFrame {
     private JTextField ankunftsStundenField;
@@ -29,18 +23,10 @@ public class Zeitrechner extends JFrame {
     private JLabel ueberstundenLabel;
     private static JLabel ergebnisLableUeberstunden;
     private JButton returnButton;
-    private JButton exitButton;
-    private JButton minimizeButton;
-    private JButton weiterButton;
     private JPanel  backgroundPanelStechen;
-    private int endStunden, endMinuten;
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
-    ArrayList<Integer> stunden = new ArrayList<>();
-    static Point mouseDownCompCoords;
-
-
 
     public static void main(String[] args) {
         UniversalDirectory.universalDirectory();
@@ -54,40 +40,6 @@ public class Zeitrechner extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
-        setResizable(false);
-        this.setUndecorated(true);
-
-        mouseDownCompCoords = null;
-        addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-            @Override
-            public void mousePressed(MouseEvent e) {
-            mouseDownCompCoords = e.getPoint();
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            mouseDownCompCoords = null;
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-            Point currCoords = getLocation();
-            setLocation(currCoords.x + e.getX() - mouseDownCompCoords.x,currCoords.y + e.getY() - mouseDownCompCoords.y);
-            }
-        });
 
         ImageIcon backgroundImage = new ImageIcon("background.png");
 
@@ -104,7 +56,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Stechenrechner", 50, 150, new Color(223, 149, 70), 65);
+                drawTextWithOutline(g, "Stechenrechner", 50, 100, new Color(223, 149, 70), 65);
             }
         };
         titleLabelMain.setBounds(50, 50, 700, 200);
@@ -122,74 +74,21 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.setContentAreaFilled(false);
         ueberstundenBalanceButton.setBorderPainted(false);
         ueberstundenBalanceButton.setForeground(new Color(223, 149, 70));
-        ueberstundenBalanceButton.setBounds(160, 230, 450, 95);
+        ueberstundenBalanceButton.setBounds(160, 180, 450, 75);
         ueberstundenBalanceButton.addActionListener(e -> ueberstundenScreen());
-
-        //TODO HIER MINIMIZe BUTTON DU HS
-        minimizeButton = new JButton("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (getParent() != null){ // BEIM NEUES PANEL NOCH EIN ELSE IF SCHREIBEN
-                    if (getParent() == backgroundPanel) {
-                        drawTextWithOutline(g, "-", 10, 20, new Color(255, 148, 69), 30);
-                    } else if (getParent() == backgroundPanelStechen) {
-                        drawTextWithOutline(g, "-", 10, 20, new Color(255, 98, 50), 30);
-                    } else {
-                        drawTextWithOutline(g, "-", 10, 20, new Color(149, 135, 191), 30);
-                    }
-                }
-            }
-        };
-        minimizeButton.setBorderPainted(false);
-        minimizeButton.setOpaque(false);
-        minimizeButton.setContentAreaFilled(false);
-        minimizeButton.setBounds(670, 15, 30, 35);
-        minimizeButton.addActionListener(e -> {
-            setState(ICONIFIED);
-        });
-        backgroundPanel.add(minimizeButton);
-
-
-
-        exitButton = new JButton("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (getParent() != null){ // BEIM NEUES PANEL NOCH EIN ELSE IF SCHREIBEN
-                    if (getParent() == backgroundPanel) {
-                        drawTextWithOutline(g, "x", 10, 20, new Color(255, 148, 69), 30);
-                    } else if (getParent() == backgroundPanelStechen) {
-                        drawTextWithOutline(g, "x", 10, 20, new Color(255, 98, 50), 30);
-                    } else {
-                        drawTextWithOutline(g, "x", 10, 20, new Color(149, 135, 191), 30);
-                    }
-                }
-
-            }};
-
-        exitButton.setBorderPainted(false);
-        exitButton.setOpaque(false);
-        exitButton.setContentAreaFilled(false);
-        exitButton.setBounds(720, 13, 50, 35);
-        exitButton.addActionListener(e -> {
-            dispose();
-        });
-        backgroundPanel.add(exitButton);
-
 
         JButton zeitDesStechensButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Zeit des Stechens", 60, 50, new Color(223, 149, 70), 30);
+                drawTextWithOutline(g, "Zeit des Stechens", 50, 150, new Color(223, 149, 70), 30);
             }
         };
         zeitDesStechensButton.setOpaque(false);
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(223, 149, 70));
-        zeitDesStechensButton.setBounds(180, 325, 470, 200);
+        zeitDesStechensButton.setBounds(180, 175, 470, 200);
         zeitDesStechensButton.addActionListener(tsHandler);
 
 
@@ -223,6 +122,14 @@ public class Zeitrechner extends JFrame {
         backgroundPanel.add(ueberstundenBalanceButton);
         backgroundPanel.add(zeitDesStechensButton);
 
+        backgroundPanelStechen = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon backgroundImage = new ImageIcon("background1.png");
+                g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }};
+        backgroundPanelStechen.setLayout(null);
     }
     //--------------------------------------------------------------------------------------------------------------------
 
@@ -251,7 +158,7 @@ public class Zeitrechner extends JFrame {
             return new Font("Serif", Font.PLAIN, 12);
         }
     }
-    public ArrayList<Integer> berechneFeierabendZeit() {
+    public void berechneFeierabendZeit() {
         int ankunftsStunden = Integer.parseInt(ankunftsStundenField.getText());
         int ankunftsMinuten = Integer.parseInt(ankunftsMinutenField.getText());
         double bleibZeit = Double.parseDouble(bleibZeitField.getText());
@@ -263,33 +170,17 @@ public class Zeitrechner extends JFrame {
         int extraStunden = endMinuten / 60;
         endMinuten = endMinuten % 60;
         int endStunden = ankunftsStunden + gesamtStunden + extraStunden;
-
-        if (endStunden <=24) {
-            ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
-        }
-        else {
-            ergebnisLabel.setText("Check deine Eingabe");
-        }
-        stunden.add(endStunden);
-        stunden.add(endMinuten);
-        return stunden;
+        ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
     }
-    public void ueberstunden(ArrayList<Integer> stunden) {
+    public void ueberstunden() {
         double vorgegebeneArbeitszeit = 7.6 * 60;
         double gesamteArbeitszeit = Double.parseDouble(bleibZeitField.getText());
         int arbeitszeitInMinuten = (int) (gesamteArbeitszeit * 60);
         int ueberstundenInMinuten = (int) (arbeitszeitInMinuten - vorgegebeneArbeitszeit);
-        int endstundis = stunden.get(0);
-        if (endstundis <=24) {
-            System.out.println(endStunden);
-            if (ueberstundenInMinuten > 0) {
-                ueberstundenLabel.setText("Ueberstunden: " + ueberstundenInMinuten + " Minuten");
-            } else {
-                ueberstundenLabel.setText("Du hast keine Ueberstunden");
-            }
-        }
-        else {
-            ueberstundenLabel.setText(":(");
+        if(ueberstundenInMinuten > 0) {
+            ueberstundenLabel.setText("Ueberstunden: " + ueberstundenInMinuten + " Minuten");
+        }else{
+            ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
         ueberstundenRueckgabe.add(ueberstundenInMinuten);
     }
@@ -321,32 +212,7 @@ public class Zeitrechner extends JFrame {
         double arbeitAusEndMinuten = (arbeitAusStundenDouble - zwischenArbeitAusStunden) * 60;
         int arbeitAusEndMinutenInt = (int) Math.round(arbeitAusEndMinuten);
 
-        if (arbeitAusInt <=24) {
-            ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
-        }
-        else {
-            System.err.println("Du Bastard");
-        }
-
-    }
-    //TODO HIIIIIIIIIIIIER
-    public void stundenExtra() {
-
-        int platzhalterMinuten = (int) stunden.get(1);
-
-        JLabel wannHeuteGehenField = new JLabel();
-        wannHeuteGehenField.setText(stunden.get(0) + ":" + (platzhalterMinuten < 10 ? "0" + platzhalterMinuten : platzhalterMinuten));
-        wannHeuteGehenField.setBounds(150, 330, 150, 25);
-        wannHeuteGehenField.setOpaque(false);
-        wannHeuteGehenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
-        add(wannHeuteGehenField);
-
-        wannHeuteGehenFieldMinute = new JTextField();
-        wannHeuteGehenFieldMinute.setBounds(350, 330, 150, 25);
-        wannHeuteGehenFieldMinute.setOpaque(false);
-        wannHeuteGehenFieldMinute.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
-        add(wannHeuteGehenFieldMinute);
-
+        ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
     }
     public void ueberstundenScreen() {
 
@@ -363,8 +229,7 @@ public class Zeitrechner extends JFrame {
         ueberstundenPanel.setVisible(true);
         ueberstundenPanel.setLayout(null);
         setContentPane(ueberstundenPanel);
-        ueberstundenPanel.add(exitButton);
-        ueberstundenPanel.add(minimizeButton);
+
         JLabel ueberstundenAnzahlLableStunden = new JLabel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -419,8 +284,7 @@ public class Zeitrechner extends JFrame {
         wannHeuteGehenLable.setVisible(true);
         ueberstundenPanel.add(wannHeuteGehenLable);
 
-        JLabel wannHeuteGehenField = new JLabel();
-        wannHeuteGehenField.setText(endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten));
+        wannHeuteGehenField = new JTextField();
         wannHeuteGehenField.setBounds(150, 330, 150, 25);
         wannHeuteGehenField.setOpaque(false);
         wannHeuteGehenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
@@ -459,9 +323,6 @@ public class Zeitrechner extends JFrame {
         });
         ueberstundenPanel.add(berechnenButtonUeberstunden);
 
-
-
-
         returnButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -478,9 +339,7 @@ public class Zeitrechner extends JFrame {
             dispose();
         });
         ueberstundenPanel.add(returnButton);
-        }
-
-
+    }
     //-------------------------------------------------------------------------------------------------------------------
     public void stechenScreen() {
         ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
@@ -495,8 +354,6 @@ public class Zeitrechner extends JFrame {
         backgroundPanelStechen.setVisible(true);
         backgroundPanelStechen.setLayout(null);
         setContentPane(backgroundPanelStechen);
-        backgroundPanelStechen.add(exitButton);
-        backgroundPanelStechen.add(minimizeButton);
 
         JLabel ankunftsStundenLabel = new JLabel("") {
             @Override
@@ -584,9 +441,9 @@ public class Zeitrechner extends JFrame {
                 stechenScreen();
                 speichernButton();
             }else{
-                berechneFeierabendZeit();
-                ueberstunden(stunden);
 
+                berechneFeierabendZeit();
+                ueberstunden();
             }
         });
         backgroundPanelStechen.add(berechnenButton);
@@ -607,25 +464,6 @@ public class Zeitrechner extends JFrame {
             dispose();
         });
         backgroundPanelStechen.add(returnButton);
-
-
-        weiterButton = new JButton("") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                drawTextWithOutline(g, "weiter", 10, 20, new Color(255, 98, 50), 27);
-            }};
-        weiterButton.setBorderPainted(false);
-        weiterButton.setOpaque(false);
-        weiterButton.setContentAreaFilled(false);
-
-        weiterButton.setBounds(600, 460, 130, 35);
-        weiterButton.addActionListener(e -> {
-            stundenExtra();
-            ueberstundenScreen();
-
-        });
-        backgroundPanelStechen.add(weiterButton);
 
         ergebnisLabel = new JLabel();
         ergebnisLabel.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 20));
@@ -656,11 +494,8 @@ public class Zeitrechner extends JFrame {
         speichern.setBounds(300, 450, 250, 50);
         speichern.addActionListener(e -> CustomFileWriter.writeFile(ueberstundenRueckgabe));backgroundPanelStechen.add(speichern);
     }
-
     public class TitleScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             stechenScreen();
             speichernButton();
-
         }}}
-
