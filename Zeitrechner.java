@@ -285,7 +285,14 @@ public class Zeitrechner extends JFrame {
         berechnenButtonUeberstunden.setContentAreaFilled(false);
 
         berechnenButtonUeberstunden.setBounds(15, 380, 300, 150);
-        berechnenButtonUeberstunden.addActionListener(e -> ueberstundenBerechnen());
+        berechnenButtonUeberstunden.addActionListener(e -> {
+            if (!ueberstundenAnzahlField.isValid() || !ueberstundenAnzahlMinutenField.isValid() || !davonverwendenField.isValid() || !davonverwendenFieldMinuten.isValid() || !wannHeuteGehenField.isValid() || !wannHeuteGehenFieldMinute.isValid()) {
+                System.err.println("nicht valid");
+                ueberstundenScreen();
+            }else{
+                ueberstundenBerechnen();
+            }
+        });
         ueberstundenPanel.add(berechnenButtonUeberstunden);
 
         returnButton = new JButton("") {
@@ -401,8 +408,15 @@ public class Zeitrechner extends JFrame {
 
         berechnenButton.setBounds(15, 430, 300, 75);
         berechnenButton.addActionListener(e -> {
-            berechneFeierabendZeit();
-            ueberstunden();
+            if (!ankunftsStundenField.isValid() || !ankunftsMinutenField.isValid() || !bleibZeitField.isValid() || !pausenZeitField.isValid()) {
+                System.err.println("nicht valid");
+                stechenScreen();
+                speichernButton();
+            }else{
+
+                berechneFeierabendZeit();
+                ueberstunden();
+            }
         });
         backgroundPanelStechen.add(berechnenButton);
 
