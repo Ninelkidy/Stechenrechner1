@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.awt.FontFormatException;
-import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -22,15 +21,15 @@ public class Zeitrechner extends JFrame {
     private static JTextField wannHeuteGehenField   ;
     private JLabel ergebnisLabel;
     private JLabel ueberstundenLabel;
-    private JLabel titleLabelMain;
     private static JLabel ergebnisLableUeberstunden;
-    private JButton ueberstundenBalanceButton, zeitDesStechensButton, speichern, returnButton, berechnenButton;
-    private JPanel  backgroundPanelStechen, ueberstundenPanel;
+    private JButton returnButton;
+    private JPanel  backgroundPanelStechen;
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
-    int ueberstundenRueckgabe;
+    ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
 
     public static void main(String[] args) {
+        UniversalDirectory.universalDirectory();
         SwingUtilities.invokeLater(() -> new Zeitrechner());
         new Musik();
     }
@@ -53,38 +52,38 @@ public class Zeitrechner extends JFrame {
         backgroundPanel.setLayout(null);
         setContentPane(backgroundPanel);
 
-        titleLabelMain = new JLabel("") {
+        JLabel titleLabelMain = new JLabel("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Stechenrechner", 50, 100,new Color(223, 149, 70), 65);
-            }};
+                drawTextWithOutline(g, "Stechenrechner", 50, 100, new Color(223, 149, 70), 65);
+            }
+        };
         titleLabelMain.setBounds(50, 50, 700, 200);
         backgroundPanel.add(titleLabelMain);
         setVisible(true);
 
-        ueberstundenBalanceButton = new JButton("") {
+        JButton ueberstundenBalanceButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 drawTextWithOutline(g, "Ueberstundenbalance", 50, 60, new Color(223, 149, 70), 30);
-            }};
+            }
+        };
         ueberstundenBalanceButton.setOpaque(false);
         ueberstundenBalanceButton.setContentAreaFilled(false);
         ueberstundenBalanceButton.setBorderPainted(false);
         ueberstundenBalanceButton.setForeground(new Color(223, 149, 70));
         ueberstundenBalanceButton.setBounds(160, 180, 450, 75);
-        ueberstundenBalanceButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ueberstundenScreen();
-            }});
+        ueberstundenBalanceButton.addActionListener(e -> ueberstundenScreen());
 
-        zeitDesStechensButton = new JButton("") {
+        JButton zeitDesStechensButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 drawTextWithOutline(g, "Zeit des Stechens", 50, 150, new Color(223, 149, 70), 30);
-            }};
+            }
+        };
         zeitDesStechensButton.setOpaque(false);
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
@@ -92,34 +91,6 @@ public class Zeitrechner extends JFrame {
         zeitDesStechensButton.setBounds(180, 175, 470, 200);
         zeitDesStechensButton.addActionListener(tsHandler);
 
-        // DROP DOWN BOX----------------------------------------
-        String[] options = {"Theme", "Office", "Indie"};
-        JComboBox<String> comboBox = new JComboBox<>(options){
-            @Override
-            protected void paintComponent(Graphics g){
-                super.paintComponent(g);
-                drawTextWithOutline(g, "Zeit des Stechens", 50, 150, new Color(223, 149, 70), 30);
-            }
-        };
-        comboBox.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
-        comboBox.setBackground(new Color(160, 215, 204));
-        comboBox.setForeground(new Color(223, 149, 70));
-        comboBox.setPreferredSize(new Dimension(110, 30));
-
-        comboBox.setBorder(BorderFactory.createLineBorder(new Color(52, 28, 18), 2));
-
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(160, 215, 204));
-        panel.add(comboBox);
-        panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-        getContentPane().add(panel, BorderLayout.CENTER);
-        setVisible(true);
-        comboBox.setBounds(15,15, 110,30);
-        comboBox.setFocusable(false);
-
-        //------------------------------------------------------
-
-        backgroundPanel.add(comboBox);
         backgroundPanel.add(ueberstundenBalanceButton);
         backgroundPanel.add(zeitDesStechensButton);
 
@@ -136,7 +107,7 @@ public class Zeitrechner extends JFrame {
 
     public void drawTextWithOutline(Graphics g, String text, int x, int y, Color textColor , int z) {
         Graphics2D g2d = (Graphics2D) g;
-        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, z);
+        Font font = loadCustomFont(Font.BOLD | Font.ITALIC, z);
         g2d.setFont(font);
 
         g2d.setColor(new Color(0x2D2D4C));
@@ -148,9 +119,9 @@ public class Zeitrechner extends JFrame {
         g2d.setColor(textColor);
         g2d.drawString(text, x, y);
     }
-    private Font loadCustomFont(String fontPath, int style, float size) {
+    private Font loadCustomFont(int style, float size) {
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(style, size);
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("INVASION2000.TTF")).deriveFont(style, size);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             return customFont;
@@ -173,7 +144,7 @@ public class Zeitrechner extends JFrame {
         int endStunden = ankunftsStunden + gesamtStunden + extraStunden;
         ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
     }
-    public int ueberstunden() {
+    public void ueberstunden() {
         double vorgegebeneArbeitszeit = 7.6 * 60;
         double gesamteArbeitszeit = Double.parseDouble(bleibZeitField.getText());
         int arbeitszeitInMinuten = (int) (gesamteArbeitszeit * 60);
@@ -183,8 +154,7 @@ public class Zeitrechner extends JFrame {
         }else{
             ueberstundenLabel.setText("Du hast keine Ueberstunden");
         }
-        ueberstundenRueckgabe = ueberstundenInMinuten;
-        return ueberstundenRueckgabe;
+        ueberstundenRueckgabe.add(ueberstundenInMinuten);
     }
     public void ueberstundenBerechnen() {
 
@@ -220,13 +190,13 @@ public class Zeitrechner extends JFrame {
 
         ImageIcon backgroundImageueberstunden = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
 
-        ueberstundenPanel = new JPanel()
-        {
+        JPanel ueberstundenPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(backgroundImageueberstunden.getImage(), 0, 0, getWidth(), getHeight(), this);
-            }};
+            }
+        };
         ueberstundenPanel.setSize(800, 600);
         ueberstundenPanel.setVisible(true);
         ueberstundenPanel.setLayout(null);
@@ -245,13 +215,13 @@ public class Zeitrechner extends JFrame {
         ueberstundenAnzahlField = new JTextField();
         ueberstundenAnzahlField.setBounds(150, 130, 150, 25);
         ueberstundenAnzahlField.setOpaque(false);
-        ueberstundenAnzahlField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ueberstundenAnzahlField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         ueberstundenPanel.add(ueberstundenAnzahlField);
 
         ueberstundenAnzahlMinutenField = new JTextField();
         ueberstundenAnzahlMinutenField.setBounds(350, 130, 150, 25);
         ueberstundenAnzahlMinutenField.setOpaque(false);
-        ueberstundenAnzahlMinutenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ueberstundenAnzahlMinutenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         ueberstundenPanel.add(ueberstundenAnzahlMinutenField);
 
         JLabel davonverwendenLable = new JLabel(){
@@ -267,13 +237,13 @@ public class Zeitrechner extends JFrame {
         davonverwendenField = new JTextField();
         davonverwendenField.setBounds(150, 240, 150, 25);
         davonverwendenField.setOpaque(false);
-        davonverwendenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        davonverwendenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         add(davonverwendenField);
 
         davonverwendenFieldMinuten = new JTextField();
         davonverwendenFieldMinuten.setBounds(350, 240, 150, 25);
         davonverwendenFieldMinuten.setOpaque(false);
-        davonverwendenFieldMinuten.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        davonverwendenFieldMinuten.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         add(davonverwendenFieldMinuten);
 
         JLabel wannHeuteGehenLable = new JLabel(){
@@ -289,17 +259,17 @@ public class Zeitrechner extends JFrame {
         wannHeuteGehenField = new JTextField();
         wannHeuteGehenField.setBounds(150, 330, 150, 25);
         wannHeuteGehenField.setOpaque(false);
-        wannHeuteGehenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        wannHeuteGehenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         add(wannHeuteGehenField);
 
         wannHeuteGehenFieldMinute = new JTextField();
         wannHeuteGehenFieldMinute.setBounds(350, 330, 150, 25);
         wannHeuteGehenFieldMinute.setOpaque(false);
-        wannHeuteGehenFieldMinute.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        wannHeuteGehenFieldMinute.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         add(wannHeuteGehenFieldMinute);
 
         ergebnisLableUeberstunden = new JLabel();
-        ergebnisLableUeberstunden.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ergebnisLableUeberstunden.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 20));
         ergebnisLableUeberstunden.setForeground(new Color(149, 135, 191));
         ergebnisLableUeberstunden.setBounds(70, 500, 500, 50);
         ueberstundenPanel.add(ergebnisLableUeberstunden);
@@ -315,10 +285,14 @@ public class Zeitrechner extends JFrame {
         berechnenButtonUeberstunden.setContentAreaFilled(false);
 
         berechnenButtonUeberstunden.setBounds(15, 380, 300, 150);
-        berechnenButtonUeberstunden.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        berechnenButtonUeberstunden.addActionListener(e -> {
+            if (!ueberstundenAnzahlField.isValid() || !ueberstundenAnzahlMinutenField.isValid() || !davonverwendenField.isValid() || !davonverwendenFieldMinuten.isValid() || !wannHeuteGehenField.isValid() || !wannHeuteGehenFieldMinute.isValid()) {
+                System.err.println("nicht valid");
+                ueberstundenScreen();
+            }else{
                 ueberstundenBerechnen();
-            }});
+            }
+        });
         ueberstundenPanel.add(berechnenButtonUeberstunden);
 
         returnButton = new JButton("") {
@@ -332,11 +306,10 @@ public class Zeitrechner extends JFrame {
         returnButton.setContentAreaFilled(false);
 
         returnButton.setBounds(10, 20, 50, 35);
-        returnButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new Zeitrechner();
-                dispose();
-            }});
+        returnButton.addActionListener(e -> {
+            new Zeitrechner();
+            dispose();
+        });
         ueberstundenPanel.add(returnButton);
         }
     //-------------------------------------------------------------------------------------------------------------------
@@ -349,7 +322,6 @@ public class Zeitrechner extends JFrame {
                 super.paintComponent(g);
                 g.drawImage(ueberstundenImage.getImage(), 0, 0, getWidth(), getHeight(), this);
             }};
-
         backgroundPanelStechen.setSize(800, 600);
         backgroundPanelStechen.setVisible(true);
         backgroundPanelStechen.setLayout(null);
@@ -368,7 +340,7 @@ public class Zeitrechner extends JFrame {
         ankunftsStundenField = new JTextField();
         ankunftsStundenField.setBounds(370, 83, 150, 25);
         ankunftsStundenField.setOpaque(false);
-        ankunftsStundenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ankunftsStundenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         ankunftsStundenField.setForeground(new Color(255, 98, 50));
         add(ankunftsStundenField);
 
@@ -385,7 +357,7 @@ public class Zeitrechner extends JFrame {
         ankunftsMinutenField = new JTextField();
         ankunftsMinutenField.setBounds(370, 183, 150, 25);
         ankunftsMinutenField.setOpaque(false);
-        ankunftsMinutenField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        ankunftsMinutenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         ankunftsMinutenField.setForeground(new Color(255, 98, 50));
         add(ankunftsMinutenField);
 
@@ -402,7 +374,7 @@ public class Zeitrechner extends JFrame {
         bleibZeitField = new JTextField();
         bleibZeitField.setBounds(370, 283, 150, 25);
         bleibZeitField.setOpaque(false);
-        bleibZeitField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        bleibZeitField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         bleibZeitField.setForeground(new Color(255, 98, 50));
         add(bleibZeitField);
 
@@ -419,26 +391,33 @@ public class Zeitrechner extends JFrame {
         pausenZeitField = new JTextField();
         pausenZeitField.setBounds(370, 383, 150, 25);
         pausenZeitField.setOpaque(false);
-        pausenZeitField.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 23));
+        pausenZeitField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
         pausenZeitField.setForeground(new Color(255, 98, 50));
         backgroundPanelStechen.add(pausenZeitField);
 
-        berechnenButton = new JButton("") {
+        JButton berechnenButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 drawTextWithOutline(g, "Berechnen", 50, 50, new Color(255, 98, 50), 30);
-            }};
+            }
+        };
         berechnenButton.setBorderPainted(false);
         berechnenButton.setOpaque(false);
         berechnenButton.setContentAreaFilled(false);
 
         berechnenButton.setBounds(15, 430, 300, 75);
-        berechnenButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        berechnenButton.addActionListener(e -> {
+            if (!ankunftsStundenField.isValid() || !ankunftsMinutenField.isValid() || !bleibZeitField.isValid() || !pausenZeitField.isValid()) {
+                System.err.println("nicht valid");
+                stechenScreen();
+                speichernButton();
+            }else{
+
                 berechneFeierabendZeit();
                 ueberstunden();
-            }});
+            }
+        });
         backgroundPanelStechen.add(berechnenButton);
 
         returnButton = new JButton("") {
@@ -452,31 +431,28 @@ public class Zeitrechner extends JFrame {
         returnButton.setContentAreaFilled(false);
 
         returnButton.setBounds(10, 20, 50, 35);
-        returnButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new Zeitrechner();
-                dispose();
-            }
+        returnButton.addActionListener(e -> {
+            new Zeitrechner();
+            dispose();
         });
         backgroundPanelStechen.add(returnButton);
 
         ergebnisLabel = new JLabel();
-        ergebnisLabel.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ergebnisLabel.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 20));
         ergebnisLabel.setForeground(new Color(255, 98, 50));
         ergebnisLabel.setBounds(20, 500, 300, 50);
         backgroundPanelStechen.add(ergebnisLabel);
 
         ueberstundenLabel = new JLabel();
-        ueberstundenLabel.setFont(loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.PLAIN, 20));
+        ueberstundenLabel.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 20));
         ueberstundenLabel.setForeground(new Color(255, 98, 50));
         ueberstundenLabel.setBounds(370, 500, 400, 50);
         backgroundPanelStechen.add(ueberstundenLabel);
-
     }
 
     public void speichernButton() {
 
-        speichern = new JButton("") {
+        JButton speichern = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -488,12 +464,7 @@ public class Zeitrechner extends JFrame {
         speichern.setContentAreaFilled(false);
 
         speichern.setBounds(300, 450, 250, 50);
-        speichern.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CustomFileWriter.writeFile(ueberstundenRueckgabe);
-            }
-        });backgroundPanelStechen.add(speichern);
-
+        speichern.addActionListener(e -> CustomFileWriter.writeFile(ueberstundenRueckgabe));backgroundPanelStechen.add(speichern);
     }
     public class TitleScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
