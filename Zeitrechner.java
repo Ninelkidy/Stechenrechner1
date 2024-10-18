@@ -56,7 +56,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Stechenrechner", 50, 100);
+                drawTextWithOutline(g, "Stechenrechner", 50, 100,new Color(223, 149, 70), 65);
             }};
         titleLabelMain.setBounds(50, 50, 700, 200);
         backgroundPanel.add(titleLabelMain);
@@ -66,7 +66,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline2(g, "Ueberstundenbalance", 50, 60);
+                drawTextWithOutline(g, "Ueberstundenbalance", 50, 60, new Color(223, 149, 70), 30);
             }};
         ueberstundenBalanceButton.setOpaque(false);
         ueberstundenBalanceButton.setContentAreaFilled(false);
@@ -76,14 +76,13 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ueberstundenScreen();
-
             }});
 
         zeitDesStechensButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline2(g, "Zeit des Stechens", 50, 150);
+                drawTextWithOutline(g, "Zeit des Stechens", 50, 150, new Color(223, 149, 70), 30);
             }};
         zeitDesStechensButton.setOpaque(false);
         zeitDesStechensButton.setContentAreaFilled(false);
@@ -105,36 +104,10 @@ public class Zeitrechner extends JFrame {
         backgroundPanelStechen.setLayout(null);
     }
     //--------------------------------------------------------------------------------------------------------------------
-    public void drawTextWithOutline(Graphics g, String text, int x, int y) {
-        Graphics2D g2d = (Graphics2D) g;
-        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, 65);
-        g2d.setFont(font);
 
-        g2d.setColor(new Color(0x2D2D4C));
-        g2d.drawString(text, x - 2, y - 2); // Oben links
-        g2d.drawString(text, x + 2, y - 2); // Oben rechts
-        g2d.drawString(text, x - 2, y + 3); // Unten links
-        g2d.drawString(text, x + 2, y + 3); // Unten rechts
-        g2d.setColor(new Color(223, 149, 70));
-        g2d.drawString(text, x, y);
-    }
-    public void drawTextWithOutline2(Graphics g, String text, int x, int y) {
+    public void drawTextWithOutline(Graphics g, String text, int x, int y, Color textColor , int z) {
         Graphics2D g2d = (Graphics2D) g;
-        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, 30);
-        g2d.setFont(font);
-
-        g2d.setColor(new Color(0x2D2D4C));
-        g2d.drawString(text, x - 2, y - 2); // Oben links
-        g2d.drawString(text, x + 2, y - 2); // Oben rechts
-        g2d.drawString(text, x - 2, y + 3); // Unten links
-        g2d.drawString(text, x + 2, y + 3); // Unten rechts
-
-        g2d.setColor(new Color(223, 149, 70));
-        g2d.drawString(text, x, y);
-    }
-    public void drawTextWithOutline(Graphics g, String text, int x, int y, Color textColor) {
-        Graphics2D g2d = (Graphics2D) g;
-        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, 30);
+        Font font = loadCustomFont("INVASION2000.TTF", Font.BOLD | Font.ITALIC, z);
         g2d.setFont(font);
 
         g2d.setColor(new Color(0x2D2D4C));
@@ -234,7 +207,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Gesammt Ueberstunden:", 50, 100, new Color(149, 135, 191));
+                drawTextWithOutline(g, "Gesammt Ueberstunden:", 50, 100, new Color(149, 135, 191), 30);
             }};
         ueberstundenAnzahlLableStunden.setBounds(0,0, 500,200);
         ueberstundenAnzahlLableStunden.setVisible(true);
@@ -256,7 +229,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Davon verwenden:", 50, 100, new Color(149, 135, 191));
+                drawTextWithOutline(g, "Davon verwenden:", 50, 100, new Color(149, 135, 191), 30);
             }};
         davonverwendenLable.setBounds(0,100, 500,200);
         davonverwendenLable.setVisible(true);
@@ -278,7 +251,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Normale Arbeitszeit:", 50,100, new Color(149, 135, 191));
+                drawTextWithOutline(g, "Normale Arbeitszeit:", 50,100, new Color(149, 135, 191), 30);
             }};
         wannHeuteGehenLable.setBounds(0,200, 500,200);
         wannHeuteGehenLable.setVisible(true);
@@ -306,7 +279,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Berechnen", 50, 100, new Color(149, 135, 191));
+                drawTextWithOutline(g, "Berechnen", 50, 100, new Color(149, 135, 191), 30);
             }};
         berechnenButtonUeberstunden.setBorderPainted(false);
         berechnenButtonUeberstunden.setOpaque(false);
@@ -323,7 +296,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "<-", 10, 20, new Color(149, 135, 191));
+                drawTextWithOutline(g, "<-", 10, 20, new Color(149, 135, 191), 30);
             }};
         returnButton.setBorderPainted(false);
         returnButton.setOpaque(false);
@@ -357,7 +330,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Ankunftsstunde:", 50, 100, new Color(255, 98, 50));
+                drawTextWithOutline(g, "Ankunftsstunde:", 50, 100, new Color(255, 98, 50), 30);
             }};
         ankunftsStundenLabel.setBounds(0,0, 500,200);
         ankunftsStundenLabel.setVisible(true);
@@ -374,7 +347,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Ankunftsminute:", 50, 200, new Color(255, 98, 50));
+                drawTextWithOutline(g, "Ankunftsminute:", 50, 200, new Color(255, 98, 50), 30);
             }};
         ankunftsMinutenLabel.setBounds(0,0, 500,400);
         ankunftsMinutenLabel.setVisible(true);
@@ -391,7 +364,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Bleibzeit:", 50, 300, new Color(255, 98, 50));
+                drawTextWithOutline(g, "Bleibzeit:", 50, 300, new Color(255, 98, 50), 30);
             }};
         bleibZeitLabel.setBounds(0,0, 500,400);
         bleibZeitLabel.setVisible(true);
@@ -408,7 +381,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Pausenzeit:", 50, 400, new Color(255, 98, 50));
+                drawTextWithOutline(g, "Pausenzeit:", 50, 400, new Color(255, 98, 50), 30);
             }};
         pausenZeitLabel.setBounds(0,0, 500,500);
         pausenZeitLabel.setVisible(true);
@@ -425,7 +398,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Berechnen", 50, 50, new Color(255, 98, 50));
+                drawTextWithOutline(g, "Berechnen", 50, 50, new Color(255, 98, 50), 30);
             }};
         berechnenButton.setBorderPainted(false);
         berechnenButton.setOpaque(false);
@@ -443,7 +416,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "<-", 10, 20, new Color(255, 98, 50));
+                drawTextWithOutline(g, "<-", 10, 20, new Color(255, 98, 50), 30);
             }};
         returnButton.setBorderPainted(false);
         returnButton.setOpaque(false);
@@ -478,7 +451,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "speichern", 50, 30, new Color(255, 98, 50));
+                drawTextWithOutline(g, "speichern", 50, 30, new Color(255, 98, 50), 30);
             }
         };
         speichern.setBorderPainted(false);
