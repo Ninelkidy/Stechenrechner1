@@ -6,11 +6,11 @@ import java.util.List;
 
 public class CustomFileWriter {
 
-    public static void writeFile(int ueberstundenRueckgabe) {
+    public static void writeFile(ArrayList ueberstundenRueckgabe) {
 
         try {
-            FileWriter writer = new FileWriter("C:/Users/Matija Jandri/Documents/ueberstunden/Ueberstunden.txt", true);
-            writer.write("" + ueberstundenRueckgabe);
+            FileWriter writer = new FileWriter("C:/Ueberstunden/Ueberstundenabspeichern.txt", true);
+            writer.write(ueberstundenRueckgabe.toString());
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
