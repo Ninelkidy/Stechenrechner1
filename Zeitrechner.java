@@ -2,11 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.awt.FontFormatException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Zeitrechner extends JFrame {
     private JTextField ankunftsStundenField;
@@ -22,7 +25,9 @@ public class Zeitrechner extends JFrame {
     private JLabel ergebnisLabel;
     private JLabel ueberstundenLabel;
     private static JLabel ergebnisLableUeberstunden;
-    private JButton returnButton, weiterButton;
+    private JButton returnButton;
+    private JButton exitButton;
+    private JButton weiterButton;
     private JPanel  backgroundPanelStechen;
     private int endStunden, endMinuten;
 
@@ -43,6 +48,8 @@ public class Zeitrechner extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
+        setResizable(false);
+        setUndecorated(true);
 
         ImageIcon backgroundImage = new ImageIcon("background.png");
 
@@ -59,7 +66,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Stechenrechner", 50, 100, new Color(223, 149, 70), 65);
+                drawTextWithOutline(g, "Stechenrechner", 50, 150, new Color(223, 149, 70), 65);
             }
         };
         titleLabelMain.setBounds(50, 50, 700, 200);
@@ -77,21 +84,50 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.setContentAreaFilled(false);
         ueberstundenBalanceButton.setBorderPainted(false);
         ueberstundenBalanceButton.setForeground(new Color(223, 149, 70));
-        ueberstundenBalanceButton.setBounds(160, 180, 450, 75);
-        ueberstundenBalanceButton.addActionListener(e -> ueberstundenScreen() );
+        ueberstundenBalanceButton.setBounds(160, 230, 450, 95);
+        ueberstundenBalanceButton.addActionListener(e -> ueberstundenScreen());
+
+
+
+        //TODO HIER EXIT BUTTON DU HS
+        exitButton = new JButton("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (getParent() != null){ // BEIM NEUES PANEL NOCH EIN ELSE IF SCHREIBEN
+                    if (getParent() == backgroundPanel) {
+                        drawTextWithOutline(g, "x", 10, 20, new Color(255, 148, 69), 30);
+                    } else if (getParent() == backgroundPanelStechen) {
+                        drawTextWithOutline(g, "x", 10, 20, new Color(255, 98, 50), 30);
+                    } else {
+                        drawTextWithOutline(g, "x", 10, 20, new Color(149, 135, 191), 30);
+                    }
+                }
+
+            }};
+
+        exitButton.setBorderPainted(false);
+        exitButton.setOpaque(false);
+        exitButton.setContentAreaFilled(false);
+        exitButton.setBounds(720, 13, 50, 35);
+        exitButton.addActionListener(e -> {
+            dispose();
+        });
+        backgroundPanel.add(exitButton);
+
 
         JButton zeitDesStechensButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Zeit des Stechens", 50, 150, new Color(223, 149, 70), 30);
+                drawTextWithOutline(g, "Zeit des Stechens", 60, 50, new Color(223, 149, 70), 30);
             }
         };
         zeitDesStechensButton.setOpaque(false);
         zeitDesStechensButton.setContentAreaFilled(false);
         zeitDesStechensButton.setBorderPainted(false);
         zeitDesStechensButton.setForeground(new Color(223, 149, 70));
-        zeitDesStechensButton.setBounds(180, 175, 470, 200);
+        zeitDesStechensButton.setBounds(180, 325, 470, 200);
         zeitDesStechensButton.addActionListener(tsHandler);
 
 
@@ -258,7 +294,7 @@ public class Zeitrechner extends JFrame {
         ueberstundenPanel.setVisible(true);
         ueberstundenPanel.setLayout(null);
         setContentPane(ueberstundenPanel);
-
+        ueberstundenPanel.add(exitButton);
         JLabel ueberstundenAnzahlLableStunden = new JLabel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -353,6 +389,9 @@ public class Zeitrechner extends JFrame {
         });
         ueberstundenPanel.add(berechnenButtonUeberstunden);
 
+
+
+
         returnButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -370,6 +409,8 @@ public class Zeitrechner extends JFrame {
         });
         ueberstundenPanel.add(returnButton);
         }
+
+
     //-------------------------------------------------------------------------------------------------------------------
     public void stechenScreen() {
         ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
@@ -384,6 +425,7 @@ public class Zeitrechner extends JFrame {
         backgroundPanelStechen.setVisible(true);
         backgroundPanelStechen.setLayout(null);
         setContentPane(backgroundPanelStechen);
+        backgroundPanelStechen.add(exitButton);
 
         JLabel ankunftsStundenLabel = new JLabel("") {
             @Override
