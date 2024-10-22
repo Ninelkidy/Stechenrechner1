@@ -27,6 +27,7 @@ public class Zeitrechner extends JFrame {
     private static JLabel ergebnisLableUeberstunden;
     private JButton returnButton;
     private JButton exitButton;
+    private JButton minimizeButton;
     private JButton weiterButton;
     private JPanel  backgroundPanelStechen;
     private int endStunden, endMinuten;
@@ -87,9 +88,33 @@ public class Zeitrechner extends JFrame {
         ueberstundenBalanceButton.setBounds(160, 230, 450, 95);
         ueberstundenBalanceButton.addActionListener(e -> ueberstundenScreen());
 
+        //TODO HIER MINIMIZe BUTTON DU HS
+        minimizeButton = new JButton("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (getParent() != null){ // BEIM NEUES PANEL NOCH EIN ELSE IF SCHREIBEN
+                    if (getParent() == backgroundPanel) {
+                        drawTextWithOutline(g, "-", 10, 20, new Color(255, 148, 69), 30);
+                    } else if (getParent() == backgroundPanelStechen) {
+                        drawTextWithOutline(g, "-", 10, 20, new Color(255, 98, 50), 30);
+                    } else {
+                        drawTextWithOutline(g, "-", 10, 20, new Color(149, 135, 191), 30);
+                    }
+                }
+            }
+        };
+        minimizeButton.setBorderPainted(false);
+        minimizeButton.setOpaque(false);
+        minimizeButton.setContentAreaFilled(false);
+        minimizeButton.setBounds(670, 15, 30, 35);
+        minimizeButton.addActionListener(e -> {
+            setState(ICONIFIED);
+        });
+        backgroundPanel.add(minimizeButton);
 
 
-        //TODO HIER EXIT BUTTON DU HS
+
         exitButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -310,6 +335,7 @@ public class Zeitrechner extends JFrame {
         ueberstundenPanel.setLayout(null);
         setContentPane(ueberstundenPanel);
         ueberstundenPanel.add(exitButton);
+        ueberstundenPanel.add(minimizeButton);
         JLabel ueberstundenAnzahlLableStunden = new JLabel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -441,6 +467,7 @@ public class Zeitrechner extends JFrame {
         backgroundPanelStechen.setLayout(null);
         setContentPane(backgroundPanelStechen);
         backgroundPanelStechen.add(exitButton);
+        backgroundPanelStechen.add(minimizeButton);
 
         JLabel ankunftsStundenLabel = new JLabel("") {
             @Override
