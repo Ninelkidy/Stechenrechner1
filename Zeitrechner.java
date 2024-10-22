@@ -209,22 +209,33 @@ public class Zeitrechner extends JFrame {
         int extraStunden = endMinuten / 60;
         endMinuten = endMinuten % 60;
         int endStunden = ankunftsStunden + gesamtStunden + extraStunden;
-        ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
 
+        if (endStunden <=24) {
+            ergebnisLabel.setText("Feierabend um " + endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten) + " Uhr.");
+        }
+        else {
+            ergebnisLabel.setText("Check deine Eingabe");
+        }
         stunden.add(endStunden);
         stunden.add(endMinuten);
-
         return stunden;
     }
-    public void ueberstunden() {
+    public void ueberstunden(ArrayList<Integer> stunden) {
         double vorgegebeneArbeitszeit = 7.6 * 60;
         double gesamteArbeitszeit = Double.parseDouble(bleibZeitField.getText());
         int arbeitszeitInMinuten = (int) (gesamteArbeitszeit * 60);
         int ueberstundenInMinuten = (int) (arbeitszeitInMinuten - vorgegebeneArbeitszeit);
-        if(ueberstundenInMinuten > 0) {
-            ueberstundenLabel.setText("Ueberstunden: " + ueberstundenInMinuten + " Minuten");
-        }else{
-            ueberstundenLabel.setText("Du hast keine Ueberstunden");
+        int endstundis = stunden.get(0);
+        if (endstundis <=24) {
+            System.out.println(endStunden);
+            if (ueberstundenInMinuten > 0) {
+                ueberstundenLabel.setText("Ueberstunden: " + ueberstundenInMinuten + " Minuten");
+            } else {
+                ueberstundenLabel.setText("Du hast keine Ueberstunden");
+            }
+        }
+        else {
+            ueberstundenLabel.setText(":(");
         }
         ueberstundenRueckgabe.add(ueberstundenInMinuten);
     }
@@ -256,8 +267,12 @@ public class Zeitrechner extends JFrame {
         double arbeitAusEndMinuten = (arbeitAusStundenDouble - zwischenArbeitAusStunden) * 60;
         int arbeitAusEndMinutenInt = (int) Math.round(arbeitAusEndMinuten);
 
-        ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
-
+        if (arbeitAusInt <=24) {
+            ergebnisLableUeberstunden.setText("Feierabend ist um: " + arbeitAusInt + " Uhr " + arbeitAusEndMinutenInt);
+        }
+        else {
+            System.err.println("Du Bastard");
+        }
 
     }
     //TODO HIIIIIIIIIIIIER
@@ -513,9 +528,9 @@ public class Zeitrechner extends JFrame {
                 stechenScreen();
                 speichernButton();
             }else{
-
                 berechneFeierabendZeit();
-                ueberstunden();
+                ueberstunden(stunden);
+
             }
         });
         backgroundPanelStechen.add(berechnenButton);
