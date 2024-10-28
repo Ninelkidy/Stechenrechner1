@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.Point;
 
 public class Zeitrechner extends JFrame {
     private JTextField ankunftsStundenField;
@@ -35,6 +38,8 @@ public class Zeitrechner extends JFrame {
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
     ArrayList<Integer> stunden = new ArrayList<>();
+    static Point mouseDownCompCoords;
+
 
 
     public static void main(String[] args) {
@@ -50,7 +55,39 @@ public class Zeitrechner extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setResizable(false);
-        setUndecorated(true);
+        this.setUndecorated(true);
+
+        mouseDownCompCoords = null;
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            mouseDownCompCoords = e.getPoint();
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            mouseDownCompCoords = null;
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+            Point currCoords = getLocation();
+            setLocation(currCoords.x + e.getX() - mouseDownCompCoords.x,currCoords.y + e.getY() - mouseDownCompCoords.y);
+            }
+        });
 
         ImageIcon backgroundImage = new ImageIcon("background.png");
 
