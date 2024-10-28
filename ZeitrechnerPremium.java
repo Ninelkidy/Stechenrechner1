@@ -54,6 +54,8 @@ public class ZeitrechnerPremium extends JFrame {
                 g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
+
+        //filler
         backgroundPanel.setLayout(null);
         setContentPane(backgroundPanel);
 
