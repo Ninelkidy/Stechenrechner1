@@ -3,11 +3,24 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import java.util.Random;
 
 
 public class Musik {
     public Musik() {
-        String filepath = "ringdingdong.wav"; // Musik file name
+        Random random = new Random();
+        int chance = random.nextInt(100);
+
+        String filepath; // Musik file name
+
+        if (chance < 4){
+            filepath = "My Neck.wav";
+        }
+        else {
+            filepath = "ringdingdong.wav";
+        }
+
+
         PlayMusic(filepath);
     }
     // PlayMusic methode geklaut von inder
