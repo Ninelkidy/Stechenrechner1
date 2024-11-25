@@ -9,6 +9,4 @@ public class UniversalDirectory {
             ordner.mkdir();
         }else{
             System.out.println("Ordner wurde bereits erstellt");
-        }
-    }
-}
+        }}}
