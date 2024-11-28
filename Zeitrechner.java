@@ -13,9 +13,10 @@ public class Zeitrechner extends JFrame {
     private JPanel backgroundPanelStechen;
     static Point mouseDownCompCoords;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         UniversalDirectory.universalDirectory();
         SwingUtilities.invokeLater(() -> new Zeitrechner());
+        new Verarscher();
     }
 
     public Zeitrechner() {
@@ -28,7 +29,7 @@ public class Zeitrechner extends JFrame {
         this.setUndecorated(true);
 
         Musik musik = new Musik();
-        musik.filepath = "My Neck.wav";
+        musik.filepath = "ringdingdong.wav";
         musik.PlayMusic(musik.filepath);
 
         mouseDownCompCoords = null;

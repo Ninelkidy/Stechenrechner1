@@ -14,15 +14,23 @@ public class Musik {
     }
     // PlayMusic methode geklaut von inder
     public void PlayMusic(String location) {
+        Random random = new Random();
+        int randomZahl = random.nextInt(100);
+
+        if (randomZahl <= 4 && location != "discord.wav"){
+            location = "My Neck.wav";
+        }
+
         try {
             File musicPath = new File(location);
+
             if (musicPath.exists()) {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInput);
                 // 50% volumen setzen
                 FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                setVolume(volumeControl, 0.50f); // float kontrolliert das volumen
+                setVolume(volumeControl, 1f); // float kontrolliert das volumen
                 clip.start();
                 System.out.println("Playing: " + filepath);
             } else {
