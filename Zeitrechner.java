@@ -16,7 +16,6 @@ public class Zeitrechner extends JFrame {
     public static void main(String[] args) {
         UniversalDirectory.universalDirectory();
         SwingUtilities.invokeLater(() -> new Zeitrechner());
-        new Musik();
     }
 
     public Zeitrechner() {
@@ -27,6 +26,10 @@ public class Zeitrechner extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         this.setUndecorated(true);
+
+        Musik musik = new Musik();
+        musik.filepath = "My Neck.wav";
+        musik.PlayMusic(musik.filepath);
 
         mouseDownCompCoords = null;
         addMouseListener(new MouseListener() {
@@ -249,6 +252,7 @@ public class Zeitrechner extends JFrame {
             e.printStackTrace();
             return new Font("Serif", Font.PLAIN, 12);
         }
+
     }
 
 
