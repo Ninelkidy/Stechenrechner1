@@ -7,24 +7,13 @@ import java.util.Random;
 
 
 public class Musik {
+    String filepath;
+
     public Musik() {
-        Random random = new Random();
-        int chance = random.nextInt(100);
-
-        String filepath; // Musik file name
-
-        if (chance < 4){
-            filepath = "My Neck.wav";
-        }
-        else {
-            filepath = "ringdingdong.wav";
-        }
-
-
         PlayMusic(filepath);
     }
     // PlayMusic methode geklaut von inder
-    public static void PlayMusic(String location) {
+    public void PlayMusic(String location) {
         try {
             File musicPath = new File(location);
             if (musicPath.exists()) {
@@ -35,7 +24,7 @@ public class Musik {
                 FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
                 setVolume(volumeControl, 0.50f); // float kontrolliert das volumen
                 clip.start();
-                System.out.println("Playing: " + location);
+                System.out.println("Playing: " + filepath);
             } else {
                 System.out.println("Music file nicht gefunden");
             }
@@ -44,7 +33,7 @@ public class Musik {
         }
     }
     // Volumen setzen
-    public static void setVolume(FloatControl volumeControl, float volume) {
+    public void setVolume(FloatControl volumeControl, float volume) {
         float min = volumeControl.getMinimum();
         float max = volumeControl.getMaximum();
         float range = max - min;
