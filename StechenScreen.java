@@ -210,7 +210,7 @@ public class StechenScreen extends JFrame {
             }else{
                 new Berechnen().berechneFeierabendZeit(stunden, ankunftsStundenField, ankunftsMinutenField, bleibZeitField, pausenZeitField, ergebnisLabel);
                 new Berechnen().ueberstunden(stunden, bleibZeitField, ueberstundenLabel);
-                new Berechnen().ueberstundenBerechnen(ueberstundenAnzahlField);
+                //new Berechnen().ueberstundenBerechnen(ueberstundenAnzahlField);
 
             }});
         backgroundPanelStechen.add(berechnenButton);
@@ -238,14 +238,17 @@ public class StechenScreen extends JFrame {
                 super.paintComponent(g);
                 drawTextWithOutline(g, "weiter", 10, 20, new Color(255, 98, 50), 27);
             }};
-        weiterButton.setBorderPainted(false);
+        weiterButton.setBorderPainted(true);
         weiterButton.setOpaque(false);
         weiterButton.setContentAreaFilled(false);
 
         weiterButton.setBounds(600, 460, 130, 35);
         weiterButton.addActionListener(e -> {
             //zeitRechner.stundenExtra();
-            new UeberstundenScreen();
+            dispose();
+            UeberstundenScreen ueberstundenScreenInstance = new UeberstundenScreen();
+            ueberstundenScreenInstance.ueberstundenScreen();
+            ueberstundenScreenInstance.setVisible(true);
         });
         backgroundPanelStechen.add(weiterButton);
 

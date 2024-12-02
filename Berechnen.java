@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Berechnen {
 
-    public static JTextField ueberstundenAnzahlMinutenField, ueberstundenAnzahlField, davonverwendenField, wannHeuteGehenFieldMinute, davonverwendenFieldMinuten, wannHeuteGehenField;
+
     public static JLabel ergebnisLableUeberstunden;
     public int endStunden, endMinuten;
     ArrayList<Integer> ueberstundenRueckgabe = new ArrayList<>();
@@ -48,7 +48,7 @@ public class Berechnen {
         }
         ueberstundenRueckgabe.add(ueberstundenInMinuten);
     }
-    public void ueberstundenBerechnen(JTextField ueberstundenAnzahlField) {
+    public void ueberstundenBerechnen(JTextField ueberstundenAnzahlField, JTextField ueberstundenAnzahlMinutenField, JTextField davonverwendenField, JTextField davonverwendenFieldMinuten, JTextField wannHeuteGehenField, JTextField wannHeuteGehenFieldMinute, JLabel ergebnisLableUeberstunden) {
 
         int gesamtUeberStunden = (Integer.parseInt(ueberstundenAnzahlField.getText()))*60; // Wie viele überstunden man hat
         int gesamtUeberMinuten = Integer.parseInt(ueberstundenAnzahlMinutenField.getText());
