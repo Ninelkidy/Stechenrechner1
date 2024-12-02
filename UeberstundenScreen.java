@@ -174,8 +174,7 @@ public class UeberstundenScreen extends JFrame {
         wannHeuteGehenLable.setVisible(true);
         ueberstundenPanel.add(wannHeuteGehenLable);
 
-        JLabel wannHeuteGehenField = new JLabel();
-        wannHeuteGehenField.setText(endStunden + ":" + (endMinuten < 10 ? "0" + endMinuten : endMinuten));
+        wannHeuteGehenField = new JTextField();
         wannHeuteGehenField.setBounds(150, 330, 150, 25);
         wannHeuteGehenField.setOpaque(false);
         wannHeuteGehenField.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 23));
@@ -210,7 +209,7 @@ public class UeberstundenScreen extends JFrame {
                 ueberstundenScreen();
             } else {
                 Berechnen rechnen = new Berechnen();
-                rechnen.ueberstundenBerechnen(ueberstundenAnzahlField);// Verwende das Zeitrechner-Objekt für den Methodenaufruf
+                rechnen.ueberstundenBerechnen(ueberstundenAnzahlField, ueberstundenAnzahlMinutenField, davonverwendenField, davonverwendenFieldMinuten, wannHeuteGehenField, wannHeuteGehenFieldMinute, ergebnisLableUeberstunden);// Verwende das Zeitrechner-Objekt für den Methodenaufruf
             }});
         ueberstundenPanel.add(berechnenButtonUeberstunden);
 

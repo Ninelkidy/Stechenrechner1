@@ -10,6 +10,7 @@ public class Musik {
     String filepath;
 
     public Musik() {
+        this.filepath = filepath;
         PlayMusic(filepath);
     }
     // PlayMusic methode geklaut von inder
