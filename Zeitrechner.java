@@ -114,15 +114,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (getParent() != null) { // BEIM NEUES PANEL NOCH EIN ELSE IF SCHREIBEN
-                    if (getParent() == backgroundPanel) {
-                        drawTextWithOutline(g, "-", 10, 20, new Color(255, 148, 69), 30);
-                    } else if (getParent() == backgroundPanelStechen) {
-                        drawTextWithOutline(g, "-", 10, 20, new Color(255, 98, 50), 30);
-                    } else {
-                        drawTextWithOutline(g, "-", 10, 20, new Color(149, 135, 191), 30);
-                    }
-                }
+                drawTextWithOutline(g, "-", 10, 20, new Color(255, 148, 69), 30);
             }
         };
         minimizeButton.setBorderPainted(false);
@@ -138,15 +130,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (getParent() != null) { // BEIM NEUES PANEL NOCH EIN ELSE IF SCHREIBEN
-                    if (getParent() == backgroundPanel) {
-                        drawTextWithOutline(g, "x", 10, 20, new Color(255, 148, 69), 30);
-                    } else if (getParent() == backgroundPanelStechen) {
-                        drawTextWithOutline(g, "x", 10, 20, new Color(255, 98, 50), 30);
-                    } else {
-                        drawTextWithOutline(g, "x", 10, 20, new Color(149, 135, 191), 30);
-                    }
-                }
+                drawTextWithOutline(g, "x", 10, 20, new Color(255, 148, 69), 30);
             }
         };
 
