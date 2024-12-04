@@ -29,8 +29,7 @@ public class Zeitrechner extends JFrame {
         this.setUndecorated(true);
 
         Musik musik = new Musik();
-        musik.filepath = "ringdingdong.wav";
-        musik.PlayMusic(musik.filepath);
+        musik.PlayMusic("ringdingdong.wav");
 
         mouseDownCompCoords = null;
         addMouseListener(new MouseListener() {
