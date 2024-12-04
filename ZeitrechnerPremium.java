@@ -304,7 +304,7 @@ public class ZeitrechnerPremium extends JFrame {
     }
     public void ueberstundenScreen() {
 
-        ImageIcon backgroundImageueberstunden = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
+        ImageIcon backgroundImageueberstunden = new ImageIcon(Objects.requireNonNull(getClass().getResource("ueberstundenPremium.jpg")));
 
         JPanel ueberstundenPanel = new JPanel() {
             @Override
