@@ -11,7 +11,6 @@ public class Musik {
 
     public Musik() {
         this.filepath = filepath;
-        PlayMusic(filepath);
     }
     // PlayMusic methode geklaut von inder
     public void PlayMusic(String location) {
