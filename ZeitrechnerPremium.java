@@ -317,6 +317,8 @@ public class ZeitrechnerPremium extends JFrame {
         ueberstundenPanel.setVisible(true);
         ueberstundenPanel.setLayout(null);
         setContentPane(ueberstundenPanel);
+        ueberstundenPanel.add(exitButton);
+        ueberstundenPanel.add(minimizeButton);
 
         JLabel ueberstundenAnzahlLableStunden = new JLabel(){
             @Override
@@ -441,6 +443,8 @@ public class ZeitrechnerPremium extends JFrame {
         backgroundPanelStechen.setVisible(true);
         backgroundPanelStechen.setLayout(null);
         setContentPane(backgroundPanelStechen);
+        backgroundPanelStechen.add(exitButton);
+        backgroundPanelStechen.add(minimizeButton);
 
         JLabel ankunftsStundenLabel = new JLabel("") {
             @Override
