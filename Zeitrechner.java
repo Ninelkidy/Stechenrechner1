@@ -29,7 +29,7 @@ public class Zeitrechner extends JFrame {
         this.setUndecorated(true);
 
         Musik musik = new Musik();
-        musik.PlayMusic("ringdingdong.wav");
+        musik.PlayMusic("C:/StechenRechner/ringdingdong.wav");
 
         mouseDownCompCoords = null;
         addMouseListener(new MouseListener() {
@@ -67,7 +67,7 @@ public class Zeitrechner extends JFrame {
             }
         });
 
-        ImageIcon backgroundImage = new ImageIcon("background.png");
+        ImageIcon backgroundImage = new ImageIcon("C:/StechenRechner/background.png");
 
         JPanel backgroundPanel = new JPanel() {
             @Override
@@ -204,7 +204,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon backgroundImage = new ImageIcon("background1.png");
+                ImageIcon backgroundImage = new ImageIcon("C:/StechenRechner/background1.png");
                 g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
@@ -228,7 +228,7 @@ public class Zeitrechner extends JFrame {
 
     private Font loadCustomFont(int style, float size) {
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("INVASION2000.TTF")).deriveFont(style, size);
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:/StechenRechner/INVASION2000.TTF")).deriveFont(style, size);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             return customFont;

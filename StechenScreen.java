@@ -66,7 +66,7 @@ public class StechenScreen extends JFrame {
             }
         });
 
-        ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("background2.jpg")));
+        ImageIcon ueberstundenImage = new ImageIcon("C:/StechenRechner/background2.jpg");
 
         backgroundPanelStechen = new JPanel() {
 
@@ -295,7 +295,7 @@ public class StechenScreen extends JFrame {
     }
     private Font loadCustomFont(int style, float size) {
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("INVASION2000.TTF")).deriveFont(style, size);
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:/StechenRechner/INVASION2000.TTF")).deriveFont(style, size);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             return customFont;

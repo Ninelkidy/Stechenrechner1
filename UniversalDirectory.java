@@ -3,7 +3,7 @@ import java.io.File;
 public class UniversalDirectory {
     public static void universalDirectory() {
 
-        File ordner = new File("C:/Ueberstunden");
+        File ordner = new File("C:/StechenRechner");
 
         if (!ordner.exists()) {
             ordner.mkdir();

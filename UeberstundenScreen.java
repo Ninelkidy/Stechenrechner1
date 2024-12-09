@@ -62,7 +62,7 @@ public class UeberstundenScreen extends JFrame {
             }
         });
 
-        ImageIcon backgroundImageueberstunden = new ImageIcon(Objects.requireNonNull(getClass().getResource("schnee.jpg")));
+        ImageIcon backgroundImageueberstunden = new ImageIcon("C:/StechenRechner/schnee.jpg");
 
         JPanel ueberstundenPanel = new JPanel() {
             @Override
@@ -239,7 +239,7 @@ public class UeberstundenScreen extends JFrame {
     }
     private Font loadCustomFont(int style, float size) {
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("INVASION2000.TTF")).deriveFont(style, size);
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:/StechenRechner/INVASION2000.TTF")).deriveFont(style, size);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             return customFont;

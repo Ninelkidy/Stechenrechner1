@@ -70,7 +70,7 @@ public class ZeitrechnerPremium extends JFrame {
             }
         });
 
-        ImageIcon backgroundImage = new ImageIcon("bubbles.png");
+        ImageIcon backgroundImage = new ImageIcon("C:/StechenRechner/bubbles.png");
 
         JPanel backgroundPanel = new JPanel() {
             @Override
@@ -237,7 +237,7 @@ public class ZeitrechnerPremium extends JFrame {
     }
     private Font loadCustomFont(int style, float size) {
         try {
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("font5.ttf")).deriveFont(style, size);
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:/StechenRechner/font5.ttf")).deriveFont(style, size);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             return customFont;
@@ -304,7 +304,7 @@ public class ZeitrechnerPremium extends JFrame {
     }
     public void ueberstundenScreen() {
 
-        ImageIcon backgroundImageueberstunden = new ImageIcon(Objects.requireNonNull(getClass().getResource("ueberstundenPremium.jpg")));
+        ImageIcon backgroundImageueberstunden = new ImageIcon("C:/StechenRechner/ueberstundenPremium.jpg");
 
         JPanel ueberstundenPanel = new JPanel() {
             @Override
@@ -429,7 +429,7 @@ public class ZeitrechnerPremium extends JFrame {
     }
     //-------------------------------------------------------------------------------------------------------------------
     public void stechenScreen() {
-        ImageIcon ueberstundenImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("imageStechen.png")));
+        ImageIcon ueberstundenImage = new ImageIcon("C:/StechenRechner/imageStechen.png");
 
         backgroundPanelStechen = new JPanel() {
             @Override
