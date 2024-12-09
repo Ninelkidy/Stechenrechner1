@@ -14,6 +14,7 @@ public class Zeitrechner extends JFrame {
     static Point mouseDownCompCoords;
 
     public static void main(String[] args) throws InterruptedException {
+        FileChecker fileChecker = new FileChecker();
         UniversalDirectory.universalDirectory();
         SwingUtilities.invokeLater(() -> new Zeitrechner());
         new Verarscher();
