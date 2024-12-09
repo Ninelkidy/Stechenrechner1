@@ -17,8 +17,8 @@ public class Musik {
         Random random = new Random();
         int randomZahl = random.nextInt(100);
 
-        if (randomZahl <= 4 && location != "discord.wav"){
-            location = "My Neck.wav";
+        if (randomZahl <= 4 && location != "C:/StechenRechner/discord.wav"){
+            location = "C:/StechenRechner/My Neck.wav";
         }
 
         try {
