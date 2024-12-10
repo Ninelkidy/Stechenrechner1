@@ -16,6 +16,7 @@ public class UeberstundenScreen extends JFrame {
     static Point mouseDownCompCoords;
 
 
+
     public void ueberstundenScreen() {
 
         setTitle("Stechenrechner");
@@ -99,7 +100,17 @@ public class UeberstundenScreen extends JFrame {
             System.exit(0);
         });
         ueberstundenPanel.add(exitButton);
-        ueberstundenPanel.add(exitButton);
+
+        JLabel version = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, Zeitrechner.aktuelleVersion, 50, 50, new Color(149, 135, 191), 20);
+            }
+        };
+        version.setBounds(655, 535, 300, 100);
+        ueberstundenPanel.add(version);
+        setVisible(true);
 
         ueberstundenAnzahlField = new JTextField();
         ueberstundenAnzahlField.setBounds(150, 130, 150, 25);
