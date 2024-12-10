@@ -1,9 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.awt.FontFormatException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -148,6 +152,50 @@ public class ZeitrechnerPremium extends JFrame {
             System.exit(0);
         });
         backgroundPanel.add(exitButton);
+
+        String fileUrl = "https://drive.google.com/uc?export=download&id=1hrRD0qzmulf-Em-zwXOxnDHbThqrNKTG"; // Replace FILE_ID with your actual file ID
+
+        try {
+
+            URL url = new URL(fileUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // Set the request method
+            connection.setRequestMethod("GET");
+
+            // Read the response
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String onlineVersion = reader.readLine();
+            reader.close();
+
+            // Check the version
+            if (Zeitrechner.aktuelleVersion.equals(onlineVersion)) {
+                JLabel version = new JLabel("") {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        drawTextWithOutline(g, Zeitrechner.aktuelleVersion, 50, 50, new Color(223, 149, 70), 20);
+                    }
+                };
+                version.setBounds(655, 535, 300, 100);
+                backgroundPanel.add(version);
+                setVisible(true);
+            } else {
+                JLabel neueVersionVorhanden = new JLabel("") {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        drawTextWithOutline(g, "Neue Version Vorhanden!", 50, 50, new Color(255, 0, 0), 20);
+                    }
+                };
+                neueVersionVorhanden.setBounds(205, 535, 500, 100);
+                backgroundPanel.add(neueVersionVorhanden);
+                setVisible(true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         minimizeButton = new JButton("") {
             @Override

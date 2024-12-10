@@ -117,6 +117,17 @@ public class StechenScreen extends JFrame {
         });
         backgroundPanelStechen.add(exitButton);
 
+        JLabel version = new JLabel("") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, Zeitrechner.aktuelleVersion, 50, 50, new Color(255, 98, 50), 20);
+            }
+        };
+        version.setBounds(655, 535, 300, 100);
+        backgroundPanelStechen.add(version);
+        setVisible(true);
+
         JLabel ankunftsStundenLabel = new JLabel("") {
             @Override
             protected void paintComponent(Graphics g) {
