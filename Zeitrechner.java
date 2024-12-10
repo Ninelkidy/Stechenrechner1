@@ -16,7 +16,7 @@ public class Zeitrechner extends JFrame {
     private JButton minimizeButton, weiterButton, exitButton, returnButton;
     private JPanel backgroundPanelStechen;
     static Point mouseDownCompCoords;
-    public static String aktuelleVersion = "1.0.0";
+    public static String aktuelleVersion = "1.0.1";
 
     public static void main(String[] args) throws InterruptedException {
         FileChecker fileChecker = new FileChecker();
@@ -100,7 +100,7 @@ public class Zeitrechner extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawTextWithOutline(g, "Download", 25, 50, new Color(223, 149, 70), 20);
+                drawTextWithOutline(g, "Download", 25, 50, new Color(255, 0, 0), 20);
             }
         };
         download.setOpaque(false);
