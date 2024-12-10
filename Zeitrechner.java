@@ -96,6 +96,24 @@ public class Zeitrechner extends JFrame {
         backgroundPanel.add(titleLabelMain);
         setVisible(true);
 
+        JButton download = new JButton(""){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawTextWithOutline(g, "Download", 25, 50, new Color(223, 149, 70), 20);
+            }
+        };
+        download.setOpaque(false);
+        download.setContentAreaFilled(false);
+        download.setBorderPainted(false);
+        download.setForeground(new Color(223, 149, 70));
+        download.setBounds(0, 535, 550, 200);
+        download.addActionListener(e -> {
+            try {
+                Desktop.getDesktop().browse(new URL("https://github.com/Ninelkidy/Stechenrechner1/releases").toURI());
+            } catch (Exception b) {}
+        });
+
         JButton ueberstundenBalanceButton = new JButton("") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -142,6 +160,7 @@ public class Zeitrechner extends JFrame {
                 version.setBounds(655, 535, 300, 100);
                 backgroundPanel.add(version);
                 setVisible(true);
+
             } else {
                 JLabel neueVersionVorhanden = new JLabel("") {
                     @Override
@@ -153,11 +172,13 @@ public class Zeitrechner extends JFrame {
                 neueVersionVorhanden.setBounds(205, 535, 500, 100);
                 backgroundPanel.add(neueVersionVorhanden);
                 setVisible(true);
+                backgroundPanel.add(download);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
 
 
