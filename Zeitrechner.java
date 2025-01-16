@@ -137,36 +137,31 @@ public class Zeitrechner extends JFrame {
             ueberstundenScreenInstance.setVisible(true);
         });
 
+        if (checkVersion == true) {
+            JLabel version = new JLabel("") {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    drawTextWithOutline(g, aktuelleVersion, 50, 50, new Color(223, 149, 70), 20);
+                }
+            };
+            version.setBounds(655, 535, 300, 100);
+            backgroundPanel.add(version);
+            setVisible(true);
 
-            if (checkVersion == true) {
-                JLabel version = new JLabel("") {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        drawTextWithOutline(g, aktuelleVersion, 50, 50, new Color(223, 149, 70), 20);
-                    }
-                };
-                version.setBounds(655, 535, 300, 100);
-                backgroundPanel.add(version);
-                setVisible(true);
-
-            } else {
-                JLabel neueVersionVorhanden = new JLabel("") {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        drawTextWithOutline(g, "Neue Version Vorhanden!", 50, 50, new Color(255, 0, 0), 20);
-                    }
-                };
-                neueVersionVorhanden.setBounds(205, 535, 500, 100);
-                backgroundPanel.add(neueVersionVorhanden);
-                setVisible(true);
-                backgroundPanel.add(download);
-            }
-
-
-
-
+        } else {
+            JLabel neueVersionVorhanden = new JLabel("") {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    drawTextWithOutline(g, "Neue Version Vorhanden!", 50, 50, new Color(255, 0, 0), 20);
+                }
+            };
+            neueVersionVorhanden.setBounds(205, 535, 500, 100);
+            backgroundPanel.add(neueVersionVorhanden);
+            setVisible(true);
+            backgroundPanel.add(download);
+        }
 
         minimizeButton = new JButton("") {
             @Override
