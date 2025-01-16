@@ -13,16 +13,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Zeitrechner extends JFrame {
+    public static boolean checkVersion;
     private JButton minimizeButton, weiterButton, exitButton, returnButton;
     private JPanel backgroundPanelStechen;
     static Point mouseDownCompCoords;
-    public static String aktuelleVersion = "1.0.1";
+    public static String aktuelleVersion = "1.0.3";
 
     public static void main(String[] args) throws InterruptedException {
         FileChecker fileChecker = new FileChecker();
         UniversalDirectory.universalDirectory();
+        VersionChecker versionChecker = new VersionChecker();
+        checkVersion = versionChecker.checkVersion();
         SwingUtilities.invokeLater(() -> new Zeitrechner());
         new Verarscher();
+        Musik musik = new Musik();
+        musik.PlayMusic("C:/StechenRechner/ringdingdong.wav");
     }
 
     public Zeitrechner() {
@@ -34,8 +39,7 @@ public class Zeitrechner extends JFrame {
         setResizable(false);
         this.setUndecorated(true);
 
-        Musik musik = new Musik();
-        musik.PlayMusic("C:/StechenRechner/ringdingdong.wav");
+
 
         mouseDownCompCoords = null;
         addMouseListener(new MouseListener() {
@@ -133,23 +137,8 @@ public class Zeitrechner extends JFrame {
             ueberstundenScreenInstance.setVisible(true);
         });
 
-        String fileUrl = "https://drive.google.com/uc?export=download&id=1hrRD0qzmulf-Em-zwXOxnDHbThqrNKTG"; // Replace FILE_ID with your actual file ID
 
-        try {
-
-            URL url = new URL(fileUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            // Set the request method
-            connection.setRequestMethod("GET");
-
-            // Read the response
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String onlineVersion = reader.readLine();
-            reader.close();
-
-            // Check the version
-            if (aktuelleVersion.equals(onlineVersion)) {
+            if (checkVersion == true) {
                 JLabel version = new JLabel("") {
                     @Override
                     protected void paintComponent(Graphics g) {
@@ -175,9 +164,6 @@ public class Zeitrechner extends JFrame {
                 backgroundPanel.add(download);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
 

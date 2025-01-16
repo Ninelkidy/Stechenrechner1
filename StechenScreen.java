@@ -243,7 +243,7 @@ public class StechenScreen extends JFrame {
                 super.paintComponent(g);
                 drawTextWithOutline(g, "weiter", 10, 20, new Color(255, 98, 50), 27);
             }};
-        weiterButton.setBorderPainted(true);
+        weiterButton.setBorderPainted(false);
         weiterButton.setOpaque(false);
         weiterButton.setContentAreaFilled(false);
 
@@ -255,7 +255,7 @@ public class StechenScreen extends JFrame {
             ueberstundenScreenInstance.ueberstundenScreen();
             ueberstundenScreenInstance.setVisible(true);
         });
-        backgroundPanelStechen.add(weiterButton);
+        //backgroundPanelStechen.add(weiterButton);
 
         ergebnisLabel = new JLabel();
         ergebnisLabel.setFont(loadCustomFont(Font.BOLD | Font.PLAIN, 20));
